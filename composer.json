@@ -1,0 +1,24 @@
+{
+  "name": "spatie/mixed-content-scanner",
+  "description": "A virtual machine for web artisans.",
+  "require": {
+    "php": ">=5.4",
+    "symfony/console": "~2.6"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Freek Van der Herten",
+      "email": "freek@spatie.be"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Spatie\\": "src"
+    }
+  },
+  "bin": [
+    "mixed-content-scanner"
+  ],
+  "minimum-stability": "stable"
+}

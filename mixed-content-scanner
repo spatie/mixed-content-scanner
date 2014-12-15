@@ -1,0 +1,15 @@
+#! /usr/bin/env php
+
+<?php
+error_reporting(E_ERROR);
+ini_set('display_errors', 1);
+
+use Symfony\Component\Console\Application;
+
+require 'vendor/autoload.php';
+
+$app = new Application('Mixed Content Scanner', '1.0');
+
+$app->add(new \Spatie\Commands\ScanCommand());
+
+$app->run();
