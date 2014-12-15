@@ -1,7 +1,7 @@
 Mixed content scanner
 =====================
 
-Scan a HTTPS-site for [mixed content](https://developer.mozilla.org/en-US/docs/Security/MixedContent). The scanner itself was built by [Bramus](https://github.com/bramus)
+Scan a HTTPS-site for [mixed content](https://developer.mozilla.org/en-US/docs/Security/MixedContent). The scanner itself was built by [Bramus](https://github.com/bramus).
 
 Installation
 ---
