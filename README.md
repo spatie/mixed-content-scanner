@@ -29,7 +29,7 @@ mixed-content-scanner scan https://www.bennish.net
 
 Updating
 ---
-You can get the latest version by executing:
+You can upgrade to the latest version of mixed-content-scanner by executing:
 ```
 composer global update spatie/mixed-content-scanner
 ```
