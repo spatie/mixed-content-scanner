@@ -7,9 +7,9 @@ ini_set('display_errors', 1);
 use Spatie\Commands\ScanCommand;
 use Symfony\Component\Console\Application;
 
-require 'vendor/autoload.php';
+require __DIR__.'/../../autoload.php';
 
-$application = new Application('Mixed Content Scanner', '0.6');
+$application = new Application('Mixed Content Scanner', '0.7');
 
 $scanCommand = new ScanCommand();
 
