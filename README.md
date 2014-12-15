@@ -27,6 +27,12 @@ It's also possible to pass an url with the original command:
 mixed-content-scanner scan https://www.bennish.net
 ```
 
+Updating
+---
+You can upgrade to the latest version of mixed-content-scanner by executing:
+```
+composer global update spatie/mixed-content-scanner
+```
 
 
 
