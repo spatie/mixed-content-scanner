@@ -1,4 +1,4 @@
-<?php namespace Spatie\Scanner;
+<?php namespace Spatie;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

@@ -1,7 +1,6 @@
 <?php namespace Spatie\Commands;
 
-use RuntimeException;
-use Spatie\Scanner\Scanner;
+use Spatie\Scanner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
