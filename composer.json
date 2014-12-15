@@ -1,6 +1,6 @@
 {
   "name": "spatie/mixed-content-scanner",
-  "description": "A virtual machine for web artisans.",
+  "description": "Scan an https-site for mixed content.",
   "require": {
     "php": ">=5.4",
     "symfony/console": "~2.6"

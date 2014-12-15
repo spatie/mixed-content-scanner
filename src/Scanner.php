@@ -60,14 +60,12 @@ class Scanner {
      * Set the url of the site to scan
      *
      * @param $rootUrl
-     * @param bool $limitToPath
      * @return $this
      */
-    public function setRootUrl($rootUrl, $limitToPath = true) {
+    public function setRootUrl($rootUrl) {
 
         // Make sure the rootUrl is parse-able
         $urlParts = parse_url($rootUrl);
-        if (!$urlParts) exit('Invalid rootUrl!');
 
         // Force trailing / on rootUrl, it's easier for us to work with it
         if (substr($rootUrl, -1) != '/') $rootUrl .= '/';
@@ -76,14 +74,7 @@ class Scanner {
         $this->rootUrl = strstr($rootUrl, '?') ? substr($rootUrl, 0, strpos($rootUrl, '?')) : $rootUrl;
 
         // store rootUrl without queryString
-        // If we need to limit to the path of the URL (viz. at first run): take that one into account
-        // Otherwise keep the already set path
-        $this->rootUrlBasePath = $urlParts['scheme'] . '://' . $urlParts['host'] . ($limitToPath ? $urlParts['path'] : $this->rootUrlParts['path']);
-
-        if (!$limitToPath) {
-            echo ' > Updated rootUrl to ' . $this->rootUrl . PHP_EOL;
-            echo ' > Updated rootUrlBasePath to ' . $this->rootUrlBasePath . PHP_EOL;
-        }
+        $this->rootUrlBasePath = $urlParts['scheme'] . '://' . $urlParts['host'] . $urlParts['path'];
 
         // store urlParts
         $this->rootUrlParts = $urlParts;
@@ -92,7 +83,7 @@ class Scanner {
 
     }
 
-    private function setIgnorePatterns($ignorePatterns, $toReplace = '{$rootUrl}') {
+    public function setIgnorePatterns($ignorePatterns, $toReplace = '{$rootUrl}') {
 
         // Force trailing / on $toReplace
         if (substr($toReplace, -1) != '/') $toReplace .= '/';
@@ -104,9 +95,7 @@ class Scanner {
         foreach ($this->ignorePatterns as &$p) {
             $p = str_replace($toReplace, $this->rootUrl, $p);
         }
-
     }
-
 
     /**
      * Scan entire website

@@ -10,16 +10,26 @@ class ScanCommand extends Command {
 
     public function configure()
     {
-        $this->setName('scan')
+        $this
+            ->setName('scan')
             ->setDescription('Scan a https-enabled site for mixed content')
             ->addArgument('url', InputArgument::REQUIRED, 'The url of the site to scan');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $url = $input->getArgument('url');
+
+        if (! $this->validateUrl($url))
+        {
+            $output->writeln('<error>' . $url . ' is not a valid url');
+            return;
+        }
+
         $scanner = new Scanner($output);
+
         $scannerResults = $scanner
-            ->setRootUrl($input->getArgument('url'))
+            ->setRootUrl($url)
             ->scan();
 
         $this->presentResults($output, $scannerResults);
@@ -45,5 +55,20 @@ class ScanCommand extends Command {
 
             $table->render($output);
         }
+        else
+        {
+            $output->writeln('No mixed content found! Hurray!');
+        }
+    }
+
+    /**
+     * Validate the given url
+     *
+     * @param $url
+     * @return bool
+     */
+    private function validateUrl($url)
+    {
+        return parse_url($url);
     }
 }
