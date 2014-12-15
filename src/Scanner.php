@@ -1,4 +1,7 @@
 <?php namespace Spatie;
+use Exception;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\TransferException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -52,6 +55,7 @@ class Scanner {
      * Create a new Scanner instance
      * .
      * @param OutputInterface $output
+     * @param $httpClient
      */
     public function __construct(OutputInterface $output, $httpClient) {
         $this->output = $output;
@@ -335,32 +339,20 @@ class Scanner {
      */
     private function getContents(&$pageUrl) {
 
-
-        @curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FOLLOWLOCATION => 1,
-            CURLOPT_URL => $pageUrl,
-            CURLOPT_TIMEOUT_MS => 10000
-        ));
-
-
         try
         {
             $httpResponse = $this->httpClient->get($pageUrl);
-        }
-        catch(Exception $exception)
+
+            // Fetch the URL of the page we actually fetched
+            $newUrl = $httpResponse->getEffectiveUrl();
+
+        } catch(Exception $exception)
         {
             $this->output->writeln('<error>' . $exception->getMessage() . '</error>');
             return '';
         }
 
-        // Fetch the URL of the page we actually fetched
-        $newUrl = $httpResponse->getEffectiveUrl();
-
         if ($newUrl != $pageUrl) {
-
-            // echo ' >> ' . $newUrl . PHP_EOL;
-
             // If we started at the rootURL, and it got redirected:
             // --> overwrite the rootUrl so that we use the new one from now on
             if ($pageUrl == $this->rootUrl) {
@@ -378,8 +370,10 @@ class Scanner {
 
         }
 
+        $bodyHtml = $httpResponse->getBody();
+
         // Return the fetched contents
-        return $httpResponse->getBody();
+        return $bodyHtml;
     }
 
     /**
