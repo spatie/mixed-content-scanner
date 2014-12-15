@@ -1,7 +1,6 @@
 <?php namespace Spatie;
+
 use Exception;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Exception\TransferException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
