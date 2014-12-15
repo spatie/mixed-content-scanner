@@ -9,7 +9,7 @@ use Symfony\Component\Console\Application;
 
 require 'vendor/autoload.php';
 
-$application = new Application('Mixed Content Scanner', '0.2');
+$application = new Application('Mixed Content Scanner', '0.3');
 
 $scanCommand = new ScanCommand();
 
