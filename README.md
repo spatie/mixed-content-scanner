@@ -1,8 +1,33 @@
 Mixed content scanner
 =====================
 
-Scan a HTTPS-site for mixed content.
+Scan a HTTPS-site for mixed content. The scanner itself was built by [Bramus](https://github.com/bramus)
 
-More info coming soon.
+Installation
+---
+You can install the scanner via composer
 
-Heavily based on the mixed content scanner by Bramus
+```
+composer global require spatie/mixed-content-scanner
+```
+
+Usage
+---
+You can start the scanner like this
+
+```
+mixed-content-scanner
+```
+
+You will be asked for an url which will be scanned for mixed content.
+
+It's also possible to pass an url with the original command:
+
+```
+mixed-content-scanner scan https://www.bennish.net
+```
+
+
+
+
+

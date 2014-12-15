@@ -4,12 +4,17 @@
 error_reporting(E_ERROR);
 ini_set('display_errors', 1);
 
+use Spatie\Commands\ScanCommand;
 use Symfony\Component\Console\Application;
 
 require 'vendor/autoload.php';
 
-$app = new Application('Mixed Content Scanner', '1.0');
+$application = new Application('Mixed Content Scanner', '1.0');
 
-$app->add(new \Spatie\Commands\ScanCommand());
+$scanCommand = new ScanCommand();
 
-$app->run();
+$application->add($scanCommand);
+
+$application->setDefaultCommand($scanCommand->getName());
+
+$application->run();

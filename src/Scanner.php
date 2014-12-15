@@ -105,41 +105,48 @@ class Scanner {
      */
     public function scan() {
 
-        $this->output->writeln('<info>Start scanning' . $this->rootUrl . '</info>');
+        $this->output->writeln(['<info>Start scanning ' . $this->rootUrl . '</info>', '']);
+
 
         // Add the root URL to the list of pages
         $this->pages[] = $this->rootUrl;
 
         // Current index at $this->pages
-        $curPageIndex = 0;
+        $currentPageIndex = 0;
 
         // Start looping
         while(true) {
 
             // Get the current pageUrl
-            $curPageUrl = $this->pages[$curPageIndex];
+            $currentPageUrl = $this->pages[$currentPageIndex];
 
             // Give feedback on the CLI
-            $this->output->writeln('<comment>Scanning ' . $curPageUrl . ' ...</comment>');
+            $this->output->writeln('<comment>Scanning ' . $currentPageUrl . ' ...</comment>');
 
-            // Scan a single page. Returns the mixed content (if any)
-            $mixedContent = $this->scanPage($curPageUrl);
+            // Scan a single page. Returns the mixed content urls (if any)
+            $mixedContentUrls = $this->scanPage($currentPageUrl);
 
             // Got mixed content? Give feedback on the CLI
-            if ($mixedContent) {
-                foreach ($mixedContent as $url) {
-                    $this->mixedContentUrls[$curPageUrl][] = $url;
+            if (count($mixedContentUrls)) {
+
+                foreach ($mixedContentUrls as $url) {
+
+                    $this->mixedContentUrls[$currentPageUrl][] = $url;
+
                     $this->output->writeln('<error>Found mixed content: ' . $url . '</error>');
                 }
             }
 
             // Done scanning all pages? Then quit! Otherwise: scan the next page
-            if ($curPageIndex+1 == sizeof($this->pages)) break;
-            else $curPageIndex++;
+            if ($this->scannedAllPages($currentPageIndex))
+            {
+                break;
+            }
 
+            $currentPageIndex++;
         }
 
-        $this->output->writeln('<info>Succesfully scanned ' . count($this->pages) . ' pages for mixed content</info>');
+        $this->output->writeln(['', '<info>Succesfully scanned ' . count($this->pages) . ' pages for mixed content</info>']);
 
         return $this->mixedContentUrls;
 
@@ -148,6 +155,7 @@ class Scanner {
 
     /**
      * Scan a single URL
+     *
      * @param  String $pageUrl 	URL of the page to scan
      * @return array
      */
@@ -366,7 +374,7 @@ class Scanner {
         $curl_errno = curl_errno($curl);
         $curl_error = curl_error($curl);
         if ($curl_errno > 0) {
-            echo ' - cURL Error (' . $curl_errno . '): ' . $curl_error . PHP_EOL;
+            $this->output->writeln('<error>cURL Error (' . $curl_errno . '): ' . $curl_error . '</error>');
         }
 
         // Close it
@@ -374,6 +382,17 @@ class Scanner {
 
         // Return the fetched contents
         return $resp;
+    }
+
+    /**
+     * Determine if we scanned all the pages
+     *
+     * @param $currentPageIndex
+     * @return bool
+     */
+    public function scannedAllPages($currentPageIndex)
+    {
+        return $currentPageIndex + 1 == count($this->pages);
     }
 
 }
