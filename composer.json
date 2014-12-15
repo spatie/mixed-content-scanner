@@ -3,7 +3,8 @@
   "description": "Scan an https-site for mixed content.",
   "require": {
     "php": ">=5.4",
-    "symfony/console": "~2.5"
+    "symfony/console": "~2.5",
+    "guzzlehttp/guzzle": "~5.0"
   },
   "license": "MIT",
   "authors": [

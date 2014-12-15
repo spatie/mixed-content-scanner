@@ -1,5 +1,6 @@
 <?php namespace Spatie\Commands;
 
+use GuzzleHttp\Client;
 use Spatie\Scanner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -31,7 +32,7 @@ class ScanCommand extends Command {
             return;
         }
 
-        $scanner = new Scanner($output);
+        $scanner = new Scanner($output, new Client());
 
         $scannerResults = $scanner
             ->setRootUrl($url)

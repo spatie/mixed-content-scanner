@@ -45,6 +45,7 @@ class Scanner {
      * @var  Array
      */
     private $mixedContentUrls = [];
+    private $httpClient;
 
 
     /**
@@ -52,8 +53,9 @@ class Scanner {
      * .
      * @param OutputInterface $output
      */
-    public function __construct(OutputInterface $output) {
+    public function __construct(OutputInterface $output, $httpClient) {
         $this->output = $output;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -333,8 +335,6 @@ class Scanner {
      */
     private function getContents(&$pageUrl) {
 
-        // Init CURL
-        $curl = curl_init();
 
         @curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -343,11 +343,19 @@ class Scanner {
             CURLOPT_TIMEOUT_MS => 10000
         ));
 
-        // Fetch the page contents
-        $resp = curl_exec($curl);
+
+        try
+        {
+            $httpResponse = $this->httpClient->get($pageUrl);
+        }
+        catch(Exception $exception)
+        {
+            $this->output->writeln('<error>' . $exception->getMessage() . '</error>');
+            return '';
+        }
 
         // Fetch the URL of the page we actually fetched
-        $newUrl = curl_getinfo($curl, CURLINFO_EFFECTIVE_URL);
+        $newUrl = $httpResponse->getEffectiveUrl();
 
         if ($newUrl != $pageUrl) {
 
@@ -370,18 +378,8 @@ class Scanner {
 
         }
 
-        // Got an error?
-        $curl_errno = curl_errno($curl);
-        $curl_error = curl_error($curl);
-        if ($curl_errno > 0) {
-            $this->output->writeln('<error>cURL Error (' . $curl_errno . '): ' . $curl_error . '</error>');
-        }
-
-        // Close it
-        @curl_close($curl);
-
         // Return the fetched contents
-        return $resp;
+        return $httpResponse->getBody();
     }
 
     /**
