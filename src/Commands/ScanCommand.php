@@ -9,8 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ScanCommand extends Command {
-
+class ScanCommand extends Command
+{
     public function configure()
     {
         $this
@@ -24,14 +24,13 @@ class ScanCommand extends Command {
     {
         $url = $input->getArgument('url');
 
-        if ($url == '')
-        {
+        if ($url == '') {
             $url = $this->askUserForUrl($output);
         }
 
-        if (! $this->validateUrl($url))
-        {
-            $output->writeln('<error>' . $url . ' is not a valid url that starts with https://</error>');
+        if (! $this->validateUrl($url)) {
+            $output->writeln('<error>'.$url.' is not a valid url that starts with https://</error>');
+
             return;
         }
 
@@ -44,8 +43,7 @@ class ScanCommand extends Command {
         $this->presentResults($output, $scannerResults);
 
         $outputFile = $input->getOption('output');
-        if ($outputFile)
-        {
+        if ($outputFile) {
             $this->writeAsJson($scannerResults, $outputFile, $output);
         }
     }
@@ -73,9 +71,7 @@ class ScanCommand extends Command {
                 ->setRows($tableArray);
 
             $table->render($output);
-        }
-        else
-        {
+        } else {
             $output->writeln('<info>No mixed content found! Hurray!</info>');
         }
 
@@ -90,11 +86,11 @@ class ScanCommand extends Command {
      */
     protected function validateUrl($url)
     {
-        return parse_url($url) AND $this->startsWith($url, 'https://');
+        return parse_url($url) and $this->startsWith($url, 'https://');
     }
 
     /**
-     * @param OutputInterface $output
+     * @param  OutputInterface $output
      * @return mixed
      */
     public function askUserForUrl(OutputInterface $output)
@@ -116,7 +112,8 @@ class ScanCommand extends Command {
      * @param $needle
      * @return bool
      */
-    protected function startsWith($string, $needle) {
+    protected function startsWith($string, $needle)
+    {
         // search backwards starting from haystack length characters from the end
         return $needle === "" || strrpos($string, $needle, -strlen($string)) !== FALSE;
     }
@@ -124,7 +121,7 @@ class ScanCommand extends Command {
     /**
      * Write the given scannerResults as json to the given outputfile
      *
-     * @param array $scannerResults
+     * @param array  $scannerResults
      * @param string $outputFile
      * @param OutputInterface$output
      */
@@ -132,6 +129,6 @@ class ScanCommand extends Command {
     {
         file_put_contents($outputFile, (new Collection($scannerResults))->toJson());
 
-        $output->writeln(['<comment>Results written to: ' . $outputFile, '']);
+        $output->writeln(['<comment>Results written to: '.$outputFile, '']);
     }
 }

@@ -9,7 +9,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Heavily based on the scanner by Bramus
  * https://github.com/bramus/mixed-content-scan
  */
-class Scanner {
+class Scanner
+{
     protected $rootUrlBasePath;
 
     /**
@@ -49,14 +50,14 @@ class Scanner {
     private $mixedContentUrls = [];
     private $httpClient;
 
-
     /**
      * Create a new Scanner instance
      * .
      * @param OutputInterface $output
      * @param $httpClient
      */
-    public function __construct(OutputInterface $output, $httpClient) {
+    public function __construct(OutputInterface $output, $httpClient)
+    {
         $this->output = $output;
         $this->httpClient = $httpClient;
     }
@@ -67,31 +68,34 @@ class Scanner {
      * @param $rootUrl
      * @return $this
      */
-    public function setRootUrl($rootUrl) {
-
+    public function setRootUrl($rootUrl)
+    {
         // Make sure the rootUrl is parse-able
         $urlParts = parse_url($rootUrl);
 
         // Force trailing / on rootUrl, it's easier for us to work with it
-        if (substr($rootUrl, -1) != '/') $rootUrl .= '/';
+        if (substr($rootUrl, -1) != '/') {
+            $rootUrl .= '/';
+        }
 
         // store rootUrl
         $this->rootUrl = strstr($rootUrl, '?') ? substr($rootUrl, 0, strpos($rootUrl, '?')) : $rootUrl;
 
         // store rootUrl without queryString
-        $this->rootUrlBasePath = $urlParts['scheme'] . '://' . $urlParts['host'] . $urlParts['path'];
+        $this->rootUrlBasePath = $urlParts['scheme'].'://'.$urlParts['host'].$urlParts['path'];
 
         // store urlParts
         $this->rootUrlParts = $urlParts;
 
         return $this;
-
     }
 
-    public function setIgnorePatterns($ignorePatterns, $toReplace = '{$rootUrl}') {
-
+    public function setIgnorePatterns($ignorePatterns, $toReplace = '{$rootUrl}')
+    {
         // Force trailing / on $toReplace
-        if (substr($toReplace, -1) != '/') $toReplace .= '/';
+        if (substr($toReplace, -1) != '/') {
+            $toReplace .= '/';
+        }
 
         // Store ignorepatterns
         $this->ignorePatterns = (array) $ignorePatterns;
@@ -108,10 +112,9 @@ class Scanner {
      *
      * @return Array
      */
-    public function scan() {
-
-        $this->output->writeln(['<info>Start scanning ' . $this->rootUrl . '</info>', '']);
-
+    public function scan()
+    {
+        $this->output->writeln(['<info>Start scanning '.$this->rootUrl.'</info>', '']);
 
         // Add the root URL to the list of pages
         $this->pages[] = $this->rootUrl;
@@ -120,52 +123,46 @@ class Scanner {
         $currentPageIndex = 0;
 
         // Start looping
-        while(true) {
-
+        while (true) {
             // Get the current pageUrl
             $currentPageUrl = $this->pages[$currentPageIndex];
 
             // Give feedback on the CLI
-            $this->output->writeln('<comment>Scanning ' . $currentPageUrl . ' ...</comment>');
+            $this->output->writeln('<comment>Scanning '.$currentPageUrl.' ...</comment>');
 
             // Scan a single page. Returns the mixed content urls (if any)
             $mixedContentUrls = $this->scanPage($currentPageUrl);
 
             // Got mixed content? Give feedback on the CLI
             if (count($mixedContentUrls)) {
-
                 foreach ($mixedContentUrls as $url) {
-
                     $this->mixedContentUrls[$currentPageUrl][] = $url;
 
-                    $this->output->writeln('<error>Found mixed content: ' . $url . '</error>');
+                    $this->output->writeln('<error>Found mixed content: '.$url.'</error>');
                 }
             }
 
             // Done scanning all pages? Then quit! Otherwise: scan the next page
-            if ($this->scannedAllPages($currentPageIndex))
-            {
+            if ($this->scannedAllPages($currentPageIndex)) {
                 break;
             }
 
             $currentPageIndex++;
         }
 
-        $this->output->writeln(['', '<info>Succesfully scanned ' . count($this->pages) . ' pages for mixed content</info>']);
+        $this->output->writeln(['', '<info>Succesfully scanned '.count($this->pages).' pages for mixed content</info>']);
 
         return $this->mixedContentUrls;
-
     }
-
 
     /**
      * Scan a single URL
      *
-     * @param  String $pageUrl 	URL of the page to scan
+     * @param  String $pageUrl URL of the page to scan
      * @return array
      */
-    private function scanPage($pageUrl) {
-
+    private function scanPage($pageUrl)
+    {
         // Array holding all URLs which are found to be Mixed Content
         // We'll return this one at the very end
         $mixedContentUrls = [];
@@ -176,23 +173,22 @@ class Scanner {
         // Create new DOMDocument using the fetched HTML
         $doc = new \DOMDocument();
         if ($doc->loadHTML($html)) {
-
             // Loop all links found
             foreach ($doc->getElementsByTagName('a') as $el) {
                 if ($el->hasAttribute('href')) {
-
                     // Normalize the URL first so that it's an absolute URL.
                     $url = $this->normalizeUrl($el->getAttribute('href'), $pageUrl);
 
                     // Remove fragment from URL (if any)
-                    if (strpos($url, '#')) $url = substr($url, 0, strpos($url, '#'));
+                    if (strpos($url, '#')) {
+                        $url = substr($url, 0, strpos($url, '#'));
+                    }
 
                     // If the URL should not be ignored (pattern matching) and isn't added to the list yet, add it to the list of pages to scan.
-                    if ((preg_match('#^' . $this->rootUrlBasePath . '#i', $url) === 1) && !in_array($url, $this->pages)) {
-
+                    if ((preg_match('#^'.$this->rootUrlBasePath.'#i', $url) === 1) && !in_array($url, $this->pages)) {
                         $ignorePatternMatched = false;
                         foreach ($this->ignorePatterns as $p) {
-                            if ($p && preg_match('#' . $p . '#i', $url)) {
+                            if ($p && preg_match('#'.$p.'#i', $url)) {
                                 $ignorePatternMatched = true;
                                 // echo ' - ignoring ' . $url . PHP_EOL;
                                 break;
@@ -202,7 +198,6 @@ class Scanner {
                             $this->pages[] = $url;
                         }
                     }
-
                 }
             }
 
@@ -255,22 +250,20 @@ class Scanner {
                     }
                 }
             }
-
         }
 
         // Return the array of Mixed Content
         return $mixedContentUrls;
     }
 
-
     /**
      * Normalizes a URL to become an absolute URL
-     * @param  String $linkedUrl	The URL linked to
-     * @param  String $pageUrlContainingTheLinkedUrl	The URL of the page holding the URL linked to
+     * @param  String $linkedUrl                     The URL linked to
+     * @param  String $pageUrlContainingTheLinkedUrl The URL of the page holding the URL linked to
      * @return String
      */
-    private function normalizeUrl($linkedUrl, $pageUrlContainingTheLinkedUrl) {
-
+    private function normalizeUrl($linkedUrl, $pageUrlContainingTheLinkedUrl)
+    {
         // Absolute URLs
         // --> Don't change
         if (substr($linkedUrl, 0, 8) == "https://" || substr($linkedUrl, 0, 7) == "http://") {
@@ -280,13 +273,13 @@ class Scanner {
         // Protocol relative URLs
         // --> Prepend scheme
         if (substr($linkedUrl, 0, 2) == "//") {
-            return $this->canonicalize($this->rootUrlParts['scheme'] . ':' . $linkedUrl);
+            return $this->canonicalize($this->rootUrlParts['scheme'].':'.$linkedUrl);
         }
 
         // Root-relative URLs
         // --> Prepend scheme and host
         if (substr($linkedUrl, 0, 1) == "/") {
-            return $this->canonicalize($this->rootUrlParts['scheme'] . '://' . $this->rootUrlParts['host'] . '/' . substr($linkedUrl, 1));
+            return $this->canonicalize($this->rootUrlParts['scheme'].'://'.$this->rootUrlParts['host'].'/'.substr($linkedUrl, 1));
         }
 
         // Document fragment
@@ -298,16 +291,14 @@ class Scanner {
         // Links that are not http or https (e.g. mailto:, tel:)
         // --> Don't scan it
         $linkedUrlParts = parse_url($linkedUrl);
-        if (isset($linkedUrlParts['scheme']) && !in_array($linkedUrlParts['scheme'], array('http','https',''))) {
+        if (isset($linkedUrlParts['scheme']) && !in_array($linkedUrlParts['scheme'], array('http', 'https', ''))) {
             return '';
         }
 
         // Document-relative URLs
         // --> Append $linkedUrl to $pageUrlContainingTheLinkedUrl's PATH
-        return $this->canonicalize(substr($pageUrlContainingTheLinkedUrl, 0, strrpos($pageUrlContainingTheLinkedUrl, '/')) . '/' . $linkedUrl);
-
+        return $this->canonicalize(substr($pageUrlContainingTheLinkedUrl, 0, strrpos($pageUrlContainingTheLinkedUrl, '/')).'/'.$linkedUrl);
     }
-
 
     /**
      * Remove ../ and ./ from a given URL
@@ -315,12 +306,12 @@ class Scanner {
      * @param  String
      * @return String
      */
-    private function canonicalize($url) {
-
+    private function canonicalize($url)
+    {
         $url = explode('/', $url);
         $keys = array_keys($url, '..');
 
-        foreach($keys AS $keypos => $key) {
+        foreach ($keys as $keypos => $key) {
             array_splice($url, $key - ($keypos * 2 + 1), 2);
         }
 
@@ -330,24 +321,21 @@ class Scanner {
         return $url;
     }
 
-
     /**
      * Get the contents of a given URL (via GET)
-     * @param  String $pageUrl 	The URL of the page to get the contents of
+     * @param  String $pageUrl The URL of the page to get the contents of
      * @return String
      */
-    private function getContents(&$pageUrl) {
-
-        try
-        {
+    private function getContents(&$pageUrl)
+    {
+        try {
             $httpResponse = $this->httpClient->get($pageUrl);
 
             // Fetch the URL of the page we actually fetched
             $newUrl = $httpResponse->getEffectiveUrl();
+        } catch (Exception $exception) {
+            $this->output->writeln('<error>'.$exception->getMessage().'</error>');
 
-        } catch(Exception $exception)
-        {
-            $this->output->writeln('<error>' . $exception->getMessage() . '</error>');
             return '';
         }
 
@@ -355,18 +343,15 @@ class Scanner {
             // If we started at the rootURL, and it got redirected:
             // --> overwrite the rootUrl so that we use the new one from now on
             if ($pageUrl == $this->rootUrl) {
-
                 // Store the new rootUrl
                 $this->setRootUrl($newUrl, false);
 
                 // Update ignore patterns
                 $this->setIgnorePatterns($this->ignorePatterns, $pageUrl);
-
             }
 
             // Update $pageUrl (pass by reference!)
             $pageUrl = $newUrl;
-
         }
 
         $bodyHtml = $httpResponse->getBody();
@@ -385,5 +370,4 @@ class Scanner {
     {
         return $currentPageIndex + 1 == count($this->pages);
     }
-
 }
