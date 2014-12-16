@@ -16,7 +16,7 @@ else
     require __DIR__.'/../../autoload.php';
 }
 
-$application = new Application('Mixed Content Scanner', '0.7');
+$application = new Application('Mixed Content Scanner', '0.8');
 
 $scanCommand = new ScanCommand();
 
