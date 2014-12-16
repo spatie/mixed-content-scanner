@@ -27,6 +27,13 @@ It's also possible to pass an url with the original command:
 mixed-content-scanner scan https://www.bennish.net
 ```
 
+Optionally you can write the results of a scan as json to an outputfile
+
+```
+mixed-content-scanner scan https://www.bennish.net --output="/your-outputfile.json"
+```
+
+
 Updating
 ---
 You can upgrade to the latest version of mixed-content-scanner by executing:
