@@ -1,10 +1,12 @@
 <?php namespace Spatie\Commands;
 
 use GuzzleHttp\Client;
+use Illuminate\Support\Collection;
 use Spatie\Scanner;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ScanCommand extends Command {
@@ -14,7 +16,8 @@ class ScanCommand extends Command {
         $this
             ->setName('scan')
             ->setDescription('Scan a https-enabled site for mixed content')
-            ->addArgument('url', InputArgument::OPTIONAL, 'The url of the site to scan. Should start with https://');
+            ->addArgument('url', InputArgument::OPTIONAL, 'The url of the site to scan. Should start with https://')
+            ->addOption('output', 'o', InputOption::VALUE_REQUIRED, 'File where the results will be written as json');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
@@ -39,6 +42,12 @@ class ScanCommand extends Command {
             ->scan();
 
         $this->presentResults($output, $scannerResults);
+
+        $outputFile = $input->getOption('output');
+        if ($outputFile)
+        {
+            $this->writeAsJson($scannerResults, $outputFile, $output);
+        }
     }
 
     /**
@@ -69,6 +78,8 @@ class ScanCommand extends Command {
         {
             $output->writeln('<info>No mixed content found! Hurray!</info>');
         }
+
+        $output->writeln('');
     }
 
     /**
@@ -105,8 +116,22 @@ class ScanCommand extends Command {
      * @param $needle
      * @return bool
      */
-    function startsWith($string, $needle) {
+    protected function startsWith($string, $needle) {
         // search backwards starting from haystack length characters from the end
         return $needle === "" || strrpos($string, $needle, -strlen($string)) !== FALSE;
+    }
+
+    /**
+     * Write the given scannerResults as json to the given outputfile
+     *
+     * @param array $scannerResults
+     * @param string $outputFile
+     * @param OutputInterface$output
+     */
+    protected function writeAsJson($scannerResults, $outputFile, OutputInterface $output)
+    {
+        file_put_contents($outputFile, (new Collection($scannerResults))->toJson());
+
+        $output->writeln(['<comment>Results written to: ' . $outputFile, '']);
     }
 }

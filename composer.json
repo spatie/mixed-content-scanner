@@ -4,7 +4,8 @@
   "require": {
     "php": ">=5.4",
     "symfony/console": "~2.5",
-    "guzzlehttp/guzzle": "~4.0"
+    "guzzlehttp/guzzle": "~4.0|~5.0",
+    "illuminate/support": "4.*|5.*"
   },
   "license": "MIT",
   "authors": [

@@ -7,7 +7,14 @@ ini_set('display_errors', 1);
 use Spatie\Commands\ScanCommand;
 use Symfony\Component\Console\Application;
 
-require __DIR__.'/../../autoload.php';
+if (file_exists(__DIR__.'/vendor/autoload.php'))
+{
+    require __DIR__.'/vendor/autoload.php';
+}
+else
+{
+    require __DIR__.'/../../autoload.php';
+}
 
 $application = new Application('Mixed Content Scanner', '0.7');
 
