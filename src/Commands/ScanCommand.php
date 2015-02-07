@@ -29,7 +29,7 @@ class ScanCommand extends Command
         }
 
         if (! $this->validateUrl($url)) {
-            $output->writeln('<error>'.$url.' is not a valid url that starts with https://</error>');
+            $output->writeln('<error>'.$url.' is not a valid url that starts with http(s)://</error>');
 
             return;
         }
@@ -86,7 +86,9 @@ class ScanCommand extends Command
      */
     protected function validateUrl($url)
     {
-        return parse_url($url) and $this->startsWith($url, 'https://');
+        return parse_url($url) 
+        AND ($this->startsWith($url, 'https://') 
+        OR  $this->startsWith($url, 'http://'));
     }
 
     /**
@@ -99,7 +101,7 @@ class ScanCommand extends Command
 
         $url = $dialog->ask(
             $output,
-            'Which https-site should be scanned for mixed content? '
+            'Which http(s)-site should be scanned for mixed content? '
         );
 
         return $url;
