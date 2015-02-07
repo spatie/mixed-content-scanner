@@ -93,11 +93,11 @@ class ScanCommand extends Command
         {
             return false;
         }
-        if ( ! $this->startsWith($url, 'https://') )
+        if (! $this->startsWith($url, 'https://') )
         {
             return false;
         }
-        if ($this->startsWith($url, 'http://')) {
+        if (! $this->startsWith($url, 'http://')) {
             return false;
         };
 
