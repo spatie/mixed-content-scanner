@@ -59,7 +59,10 @@ class ScanCommand extends Command
         $output->writeln('');
 
         if (count($scannerResults)) {
+
             $output->writeln('<error>Found some mixed content</error>');
+
+            $tableArray = [];
 
             foreach ($scannerResults as $siteUrl => $mixedContentUrls) {
                 $tableArray[] = [$siteUrl, implode(PHP_EOL, $mixedContentUrls)];
@@ -86,9 +89,19 @@ class ScanCommand extends Command
      */
     protected function validateUrl($url)
     {
-        return parse_url($url) 
-        AND ($this->startsWith($url, 'https://') 
-        OR  $this->startsWith($url, 'http://'));
+        if (! parse_url($url) )
+        {
+            return false;
+        }
+        if ( ! $this->startsWith($url, 'https://') )
+        {
+            return false;
+        }
+        if ($this->startsWith($url, 'http://')) {
+            return false;
+        };
+
+        return true;
     }
 
     /**

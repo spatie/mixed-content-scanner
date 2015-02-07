@@ -190,7 +190,6 @@ class Scanner
                         foreach ($this->ignorePatterns as $p) {
                             if ($p && preg_match('#'.$p.'#i', $url)) {
                                 $ignorePatternMatched = true;
-                                // echo ' - ignoring ' . $url . PHP_EOL;
                                 break;
                             }
                         }
