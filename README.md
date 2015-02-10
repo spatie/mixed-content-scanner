@@ -1,3 +1,7 @@
+###Abandoned
+This project is abandoned. Please use [this scanner ](https://github.com/bramus/mixed-content-scan) instead.
+
+
 Mixed content scanner
 =====================
 
