@@ -1,5 +1,6 @@
 {
   "name": "spatie/mixed-content-scanner",
+  "homepage": "https://github.com/spatie/mixed-content-scanner",
   "description": "Scan an https-site for mixed content.",
   "require": {
     "php": ">=5.4",
