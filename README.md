@@ -144,7 +144,7 @@ interface CrawlProfile
 And here's how you can let the scanner use your profile:
 
 ```php
-use Spatie\MixedContentScanner\MixedContentScanner
+use Spatie\MixedContentScanner\MixedContentScanner;
 
 $logger = new MixedContentLogger();
 
