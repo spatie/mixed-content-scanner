@@ -32,18 +32,36 @@ class MixedContentObserver implements CrawlObserver
         }
     }
 
+    /**
+     * Will be called when the host did not give a response for the given url.
+     *
+     * @param \Spatie\Crawler\Url $crawledUrl
+     */
     public function didNotRespond(Url $crawledUrl)
     {
     }
 
+    /**
+     * Will be called when mixed content was found.
+     *
+     * @param \Spatie\MixedContentScanner\MixedContent $mixedContent
+     */
     public function mixedContentFound(MixedContent $mixedContent)
     {
     }
 
+    /**
+     * Will be called when no mixed content was found on the given url.
+     *
+     * @param \Spatie\Crawler\Url $crawledUrl
+     */
     public function noMixedContentFound(Url $crawledUrl)
     {
     }
 
+    /**
+     * Will be called when the scanner has finished crawling.
+     */
     public function finishedCrawling()
     {
     }

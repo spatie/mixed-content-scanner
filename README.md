@@ -14,14 +14,16 @@ This package contains a class that can scan your site for [mixed content](https:
 Here's an example of how you can use it:
 
 ```php
-$logger = new MixedContentObserver();
+use Spatie\MixedContentScanner\MixedContentScanner
+
+$logger = new MixedContentLogger();
 
 $scanner = new MixedContentScanner($logger);
 
 $scanner->scan('https://example.com');
 ```
 
-`MixedContentObserver` contains methods that get called when mixed content is (not) found. 
+`MixedContentLogger` is a class that contains methods that get called when mixed content is (not) found. 
 
 If you don't need a custom implementation but simply want to look for mixed content using a command line tool, take a look at [our mixed-content-scanner-cli package](https://github.com/spatie/mixed-content-scanner-cli).
 
@@ -42,6 +44,73 @@ composer require spatie/mixed-content-scanner
 ```
 
 ## Usage
+
+```php
+use Spatie\MixedContentScanner\MixedContentScanner
+
+$logger = new MixedContentLogger();
+
+$scanner = new MixedContentScanner($logger);
+
+$scanner->scan('https://example.com');
+```
+
+That `MixedContentScanner` accepts an instance of a class that extends `\Spatie\MixedContentScannerMixedContentObserver`. You should create such a class yourself. Let's take a look at an example implementation.
+
+```php
+namespace Spatie\MixedContentScanner\Test;
+
+use Spatie\Crawler\Url;
+use Spatie\MixedContentScanner\MixedContent;
+use Spatie\MixedContentScanner\MixedContentObserver;
+
+class MixedContentLogger extends MixedContentObserver
+{
+    /**
+     * Will be called when the host did not give a response for the given url.
+     * 
+     * @param \Spatie\Crawler\Url $crawledUrl
+     */
+    public function didNotRespond(Url $crawledUrl)
+    {
+    }
+
+    /**
+     * Will be called when mixed content was found.
+     * 
+     * @param \Spatie\MixedContentScanner\MixedContent $mixedContent
+     */
+    public function mixedContentFound(MixedContent $mixedContent)
+    {
+    }
+
+    /**
+     * Will be called when no mixed content was found on the given url.
+     * 
+     * @param \Spatie\Crawler\Url $crawledUrl
+     */
+    public function noMixedContentFound(Url $crawledUrl)
+    {
+    }
+
+    /**
+     * Will be called when the scanner has finished crawling.
+     */
+    public function finishedCrawling()
+    {
+    }
+}
+```
+
+Of course you should supply a function body to these methods yourself. If you don't need a function just leave it off.
+
+The `$mixedContent` variable the `mixedContentFound` class accept is an instance of `\Spatie\MixedContentScanner\MixedContent` which has these three properties:
+
+- `$elementName`: the name of the element that is regarded as mixed content
+- `$mixedContentUrl`: the url of the element that is regarded as mixed content. For an image this can be the value of `src` or `srcset` for a `form` this can be the value of `action`, ...
+- `$foundOnUrl`: the url where the mixed content was found
+
+
 
 
 ## Changelog
