@@ -2,10 +2,10 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Illuminate\Support\Collection;
 use Spatie\Crawler\Url;
-use Symfony\Component\DomCrawler\Crawler as DomCrawler;
+use Illuminate\Support\Collection;
 use Symfony\Component\DomCrawler\Link;
+use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class MixedContentExtractor
 {
