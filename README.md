@@ -113,7 +113,7 @@ The `$mixedContent` variable the `mixedContentFound` class accept is an instance
 The scanner is powered by [our homegrown Crawler](https://github.com/spatie/crawler) which on it's turn leverages [Guzzle](http://docs.guzzlephp.org/en/stable/) to perform webrequests.
 You can pass an array of options to the second argument of `MixedContentScanner`. These options will be passed to the Guzzle Client. 
 
-Here's an example where ssl verification is beign turned off.
+Here's an example where ssl verification is being turned off.
 
 ```php
 $scanner = new MixedContentScanner($logger, ['verify' => 'false']);
