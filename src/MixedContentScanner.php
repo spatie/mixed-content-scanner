@@ -4,6 +4,7 @@ namespace Spatie\MixedContentScanner;
 
 use Spatie\Crawler\CrawlAllUrls;
 use Spatie\Crawler\Crawler;
+use Spatie\Crawler\CrawlInternalUrls;
 use Spatie\Crawler\CrawlProfile;
 
 class MixedContentScanner
@@ -22,7 +23,7 @@ class MixedContentScanner
     public function scan(string $url, array $clientOptions = [])
     {
         Crawler::create($clientOptions)
-            ->setCrawlProfile($this->crawlProfile ?? new CrawlAllUrls())
+            ->setCrawlProfile($this->crawlProfile ?? new CrawlInternalUrls($url))
             ->setCrawlObserver($this->mixedContentObserver)
             ->startCrawling($url);
     }

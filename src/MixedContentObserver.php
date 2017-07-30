@@ -33,10 +33,9 @@ class MixedContentObserver implements CrawlObserver
         }
     }
 
-    /** null|GuzzleHttp\Psr7\Response */
-    public function failedToCrawl(Url $crawledUrl, $response)
+    public function didNotRespond(Url $crawledUrl)
     {
-        dump($response);
+
     }
 
     public function mixedContentFound(MixedContent $mixedContent)

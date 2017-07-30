@@ -13,7 +13,7 @@ class MixedContentScannerTest extends TestCase
     }
 
     /** @test */
-    public function true_is_true()
+    public function if_can_find_mixed_content()
     {
         $logger = new MixedContentLogger();
 

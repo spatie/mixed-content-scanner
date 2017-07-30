@@ -41,10 +41,10 @@ class MixedContentExtractor
     protected static function getSearchNodes(): Collection
     {
         return collect([
-            'a' => ['href'],
             'audio' => ['src'],
             'embed' => ['src'],
             'form' => ['action'],
+            'link' => ['href'],
             'iframe' => ['src'],
             'img' => ['src', 'srcset'],
             'object' => ['data'],
