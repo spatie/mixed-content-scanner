@@ -31,7 +31,6 @@ class Server
         $pid = exec($startServerCommand);
 
         while (! static::serverHasBooted()) {
-
             usleep(1000);
         }
 

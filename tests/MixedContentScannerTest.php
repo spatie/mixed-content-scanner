@@ -19,12 +19,10 @@ class MixedContentScannerTest extends TestCase
 
         $scanner = new MixedContentScanner($logger);
 
-        $scanner->scan('http://' . Server::getServerUrl());
+        $scanner->scan('http://'.Server::getServerUrl());
 
         $logger->assertPageHasMixedContent('/mixedContent');
 
         $logger->assertPageHasNoMixedContent('/noMixedContent');
     }
-
-
 }

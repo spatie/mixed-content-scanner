@@ -2,8 +2,8 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use PHPUnit\Framework\Assert;
 use Spatie\Crawler\Url;
+use PHPUnit\Framework\Assert;
 use Spatie\MixedContentScanner\MixedContent;
 use Spatie\MixedContentScanner\MixedContentObserver;
 
@@ -24,10 +24,10 @@ class MixedContentLogger extends MixedContentObserver
     public function assertPageHasMixedContent(string $pageUrl)
     {
         $foundLogItems = collect($this->log)
-            ->filter(function($logItem) {
+            ->filter(function ($logItem) {
                 return $logItem instanceof MixedContent;
             })
-            ->filter(function(MixedContent $mixedContent) use ($pageUrl) {
+            ->filter(function (MixedContent $mixedContent) use ($pageUrl) {
                 return $mixedContent->foundOnUrl->path === $pageUrl;
             });
 
@@ -37,10 +37,10 @@ class MixedContentLogger extends MixedContentObserver
     public function assertPageHasNoMixedContent(string $pageUrl)
     {
         $foundLogItems = collect($this->log)
-            ->filter(function($logItem) {
+            ->filter(function ($logItem) {
                 return $logItem instanceof Url;
             })
-            ->filter(function(Url $url) use ($pageUrl) {
+            ->filter(function (Url $url) use ($pageUrl) {
                 return $url->path === $pageUrl;
             });
 

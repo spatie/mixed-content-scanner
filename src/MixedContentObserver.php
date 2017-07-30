@@ -9,7 +9,6 @@ class MixedContentObserver implements CrawlObserver
 {
     public function willCrawl(Url $url)
     {
-
     }
 
     public function hasBeenCrawled(Url $crawledUrl, $response, Url $foundOnUrl = null)
@@ -20,7 +19,7 @@ class MixedContentObserver implements CrawlObserver
             return;
         }
 
-        $mixedContent = MixedContentExtractor::extract((string)$response->getBody(), $crawledUrl);
+        $mixedContent = MixedContentExtractor::extract((string) $response->getBody(), $crawledUrl);
 
         if (! count($mixedContent)) {
             $this->noMixedContentFound($crawledUrl);
@@ -35,21 +34,17 @@ class MixedContentObserver implements CrawlObserver
 
     public function didNotRespond(Url $crawledUrl)
     {
-
     }
 
     public function mixedContentFound(MixedContent $mixedContent)
     {
-
     }
 
     public function noMixedContentFound(Url $crawledUrl)
     {
-
     }
 
     public function finishedCrawling()
     {
-
     }
 }

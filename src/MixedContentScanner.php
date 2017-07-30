@@ -2,10 +2,9 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Spatie\Crawler\CrawlAllUrls;
 use Spatie\Crawler\Crawler;
-use Spatie\Crawler\CrawlInternalUrls;
 use Spatie\Crawler\CrawlProfile;
+use Spatie\Crawler\CrawlInternalUrls;
 
 class MixedContentScanner
 {
