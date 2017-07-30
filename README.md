@@ -108,6 +108,17 @@ The `$mixedContent` variable the `mixedContentFound` class accept is an instance
 - `$mixedContentUrl`: the url of the element that is regarded as mixed content. For an image this can be the value of `src` or `srcset` for a `form` this can be the value of `action`, ...
 - `$foundOnUrl`: the url where the mixed content was found
 
+### Customizing the requests
+
+The scanner is powered by [our homegrown Crawler](https://github.com/spatie/crawler) which on it's turn leverages [Guzzle](http://docs.guzzlephp.org/en/stable/) to perform webrequests.
+You can pass an array of options to the second argument of `MixedContentScanner`. These options will be passed to the Guzzle Client. 
+
+Here's an example where ssl verification is beign turned off.
+
+```php
+$scanner = new MixedContentScanner($logger, ['verify' => 'false']);
+```
+
 ### Filtering the crawled urls
 
 By default the mixed content scanner will crawl all urls of the hostname given. If you want to filter the urls to be crawled, you can pass the scanner an implementation of `Spatie\Crawler\CrawlProfile`.
