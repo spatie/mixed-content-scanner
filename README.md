@@ -7,7 +7,21 @@
 [![StyleCI](https://styleci.io/repos/28050386/shield?branch=master)](https://styleci.io/repos/28050386)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/mixed-content-scanner.svg?style=flat-square)](https://packagist.org/packages/spatie/mixed-content-scanner)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
+This package contains a class that can scan your site for [mixed content](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content).
+
+Here's an example of how you can use it:
+
+```php
+$logger = new MixedContentObserver();
+
+$scanner = new MixedContentScanner($logger);
+
+$scanner->scan('https://example.com');
+```
+
+`MixedContentObserver` contains methods that get called when mixed content is (not) found. 
+
+If you don't need a custom implementation but simply want to look for mixed content using a command line tool, take a look at [our mixed-content-scanner-cli package](https://github.com/spatie/mixed-content-scanner-cli).
 
 ## Postcardware
 
@@ -27,10 +41,6 @@ composer require spatie/mixed-content-scanner
 
 ## Usage
 
-``` php
-$skeleton = new Spatie\Skeleton();
-echo $skeleton->echoPhrase('Hello, Spatie!');
-```
 
 ## Changelog
 
