@@ -14,7 +14,7 @@ class MixedContentObserver implements CrawlObserver
     public function hasBeenCrawled(Url $crawledUrl, $response, Url $foundOnUrl = null)
     {
         if (! $response) {
-            $this->failedToCrawl($crawledUrl, $response);
+            $this->didNotRespond($crawledUrl, $response);
 
             return;
         }
