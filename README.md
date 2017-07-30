@@ -63,7 +63,7 @@ When scanning a site, the scanner will crawl everypage. On the html of these pac
 
 If any of those attributes start with `http://` the element will be regarded as mixed content.
 
-
+The package does not scan linked `.css` or `.js` files. Inline `<script>` or `<style>` are not taken into consideration.
 
 ## Usage
 
