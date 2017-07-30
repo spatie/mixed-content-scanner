@@ -43,6 +43,28 @@ You can install the package via composer:
 composer require spatie/mixed-content-scanner
 ```
 
+## How it work under the hood
+
+When scanning a site, the scanner will crawl everypage. On the html of these package, these elements and attributes will be checked:
+
+```php
+- `audio`: `src`
+- `embed`: `src`
+- `form`: `action`
+- `link`: `href`
+- `iframe`: `src`
+- `img`: `src`, `srcset`
+- `object`: `data`
+- `param`: `value`
+- `script`: `src`
+- `source`: `src`, `srcset`
+- `video`: `src`
+```
+
+If any of those attributes start with `http://` the element will be regarded as mixed content.
+
+
+
 ## Usage
 
 ```php
@@ -175,6 +197,8 @@ If you discover any security related issues, please email freek@spatie.be instea
 
 - [Freek Van der Herten](https://github.com/freekmurze)
 - [All Contributors](../../contributors)
+
+The scanner is inspired by [mixed-content-scan](https://github.com/bramus/mixed-content-scan) by [Bram Van Damme](https://github.com/bramus). Parts of his readme and code were used.
 
 ## About Spatie
 
