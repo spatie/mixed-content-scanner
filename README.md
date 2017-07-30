@@ -2,7 +2,7 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/mixed-content-scanner.svg?style=flat-square)](https://packagist.org/packages/spatie/mixed-content-scanner)
 [![Build Status](https://img.shields.io/travis/spatie/mixed-content-scanner/master.svg?style=flat-square)](https://travis-ci.org/spatie/mixed-content-scanner)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/xxxxxxxxx.svg?style=flat-square)](https://insight.sensiolabs.com/projects/xxxxxxxxx)
+[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/7a85bc21-0d7b-4b0d-875d-da5c5dcb853e.svg?style=flat-square)](https://insight.sensiolabs.com/projects/7a85bc21-0d7b-4b0d-875d-da5c5dcb853e)
 [![Quality Score](https://img.shields.io/scrutinizer/g/spatie/mixed-content-scanner.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/mixed-content-scanner)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/mixed-content-scanner.svg?style=flat-square)](https://packagist.org/packages/spatie/mixed-content-scanner)
 
