@@ -18,8 +18,18 @@ $app->get('/noMixedContent', function () {
     return view('noMixedContent');
 });
 
+$app->get('noResponse', function() {
+    die();
+});
+
+$app->get('redirect', function() {
+   return redirect('/noMixedContent');
+});
+
 $app->get('booted', function () {
     return 'app has booted';
 });
+
+
 
 $app->run();
