@@ -28,15 +28,15 @@
     "autoload": {
         "psr-4": {
             "Spatie\\MixedContentScanner\\": "src"
-        },
-        "files": [
-            "tests/helpers.php"
-        ]
+        }
     },
     "autoload-dev": {
         "psr-4": {
             "Spatie\\MixedContentScanner\\Test\\": "tests"
-        }
+        },
+        "files": [
+            "tests/helpers.php"
+        ]
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
