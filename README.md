@@ -58,13 +58,11 @@ $scanner->scan('https://example.com');
 That `MixedContentScanner` accepts an instance of a class that extends `\Spatie\MixedContentScannerMixedContentObserver`. You should create such a class yourself. Let's take a look at an example implementation.
 
 ```php
-namespace Spatie\MixedContentScanner\Test;
-
 use Spatie\Crawler\Url;
 use Spatie\MixedContentScanner\MixedContent;
 use Spatie\MixedContentScanner\MixedContentObserver;
 
-class MixedContentLogger extends MixedContentObserver
+class MyMixedContentLogger extends MixedContentObserver
 {
     /**
      * Will be called when the host did not give a response for the given url.
@@ -110,8 +108,39 @@ The `$mixedContent` variable the `mixedContentFound` class accept is an instance
 - `$mixedContentUrl`: the url of the element that is regarded as mixed content. For an image this can be the value of `src` or `srcset` for a `form` this can be the value of `action`, ...
 - `$foundOnUrl`: the url where the mixed content was found
 
+### Filtering the crawled urls
 
+By default the mixed content scanner will crawl all urls of the hostname given. If you want to filter the urls to be crawled, you can pass the scanner an implementation of `Spatie\Crawler\CrawlProfile`.
 
+Here's the interface:
+
+```php
+namespace Spatie\Crawler;
+
+interface CrawlProfile
+{
+    /**
+     * Determine if the given url should be crawled.
+     *
+     * @param \Spatie\Crawler\Url $url
+     *
+     * @return bool
+     */
+    public function shouldCrawl(Url $url): bool;
+}
+```
+
+And here's how you can let the scanner use your profile:
+
+```php
+use Spatie\MixedContentScanner\MixedContentScanner
+
+$logger = new MixedContentLogger();
+
+$scanner = new MixedContentScanner($logger);
+
+$scanner->useCrawlProfile(new MyCrawlProfile);
+```
 
 ## Changelog
 
