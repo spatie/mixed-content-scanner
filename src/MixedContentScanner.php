@@ -30,5 +30,7 @@ class MixedContentScanner
     public function useCrawlProfile(CrawlProfile $crawlProfile)
     {
         $this->crawlProfile = $crawlProfile;
+
+        return $this;
     }
 }
