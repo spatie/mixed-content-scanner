@@ -170,7 +170,7 @@ $logger = new MixedContentLogger();
 
 $scanner = new MixedContentScanner($logger);
 
-$scanner->useCrawlProfile(new MyCrawlProfile);
+$scanner->setCrawlProfile(new MyCrawlProfile);
 ```
 
 ## Changelog

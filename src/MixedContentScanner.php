@@ -27,7 +27,7 @@ class MixedContentScanner
             ->startCrawling($url);
     }
 
-    public function useCrawlProfile(CrawlProfile $crawlProfile)
+    public function setCrawlProfile(CrawlProfile $crawlProfile)
     {
         $this->crawlProfile = $crawlProfile;
 
