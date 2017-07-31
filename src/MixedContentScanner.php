@@ -5,6 +5,8 @@ namespace Spatie\MixedContentScanner;
 use Spatie\Crawler\Crawler;
 use Spatie\Crawler\CrawlProfile;
 use Spatie\Crawler\CrawlInternalUrls;
+use Spatie\Crawler\Url;
+use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 
 class MixedContentScanner
 {
@@ -21,6 +23,10 @@ class MixedContentScanner
 
     public function scan(string $url, array $clientOptions = [])
     {
+        $this->guardAgainstInvalidUrl($url);
+
+        $url = Url::create($url);
+
         Crawler::create($clientOptions)
             ->setCrawlProfile($this->crawlProfile ?? new CrawlInternalUrls($url))
             ->setCrawlObserver($this->mixedContentObserver)
@@ -32,5 +38,27 @@ class MixedContentScanner
         $this->crawlProfile = $crawlProfile;
 
         return $this;
+    }
+
+    protected function guardAgainstInvalidUrl(string $url)
+    {
+        if ($url == '') {
+            throw InvalidUrl::urlIsEmpty();
+        }
+
+        if (! $this->startsWith($url, ['http://', 'https://'])) {
+            throw InvalidUrl::invalidScheme($url);
+        }
+    }
+
+    protected function startsWith(string $haystack, array $needles): bool
+    {
+        foreach ((array) $needles as $needle) {
+            if ($needle != '' && substr($haystack, 0, strlen($needle)) === (string) $needle) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
