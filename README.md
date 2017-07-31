@@ -43,9 +43,9 @@ You can install the package via composer:
 composer require spatie/mixed-content-scanner
 ```
 
-## How it work under the hood
+## How it works under the hood
 
-When scanning a site, the scanner will crawl everypage. On the html of these package, these elements and attributes will be checked:
+When scanning a site, the scanner will crawl everypage. On the retrieve html, these elements and attributes will be checked:
 
 - `audio`: `src`
 - `embed`: `src`
@@ -61,7 +61,7 @@ When scanning a site, the scanner will crawl everypage. On the html of these pac
 
 If any of those attributes start with `http://` the element will be regarded as mixed content.
 
-The package does not scan linked `.css` or `.js` files. Inline `<script>` or `<style>` are not taken into consideration.
+The package does not scan linked `.css` or `.js` files, not does it take inline `<script>` or `<style>` into consideration.
 
 ## Usage
 
