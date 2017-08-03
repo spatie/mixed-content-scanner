@@ -3,6 +3,7 @@
 namespace Spatie\MixedContentScanner\Test;
 
 use PHPUnit\Framework\TestCase;
+use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 use Spatie\MixedContentScanner\MixedContentScanner;
 
 class MixedContentScannerTest extends TestCase
@@ -26,7 +27,15 @@ class MixedContentScannerTest extends TestCase
         $logger->assertPageHasNoMixedContent('/noMixedContent');
     }
 
+    /** @test */
     public function it_will_throw_an_exception_when_given_an_url_with_an_invalid_protocol()
     {
+        $logger = new MixedContentLogger();
+
+        $scanner = new MixedContentScanner($logger);
+
+        $this->expectException(InvalidUrl::class);
+
+        $scanner->scan('blabla');
     }
 }
