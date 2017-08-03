@@ -3,8 +3,8 @@
 namespace Spatie\MixedContentScanner\Test;
 
 use PHPUnit\Framework\TestCase;
-use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 use Spatie\MixedContentScanner\MixedContentScanner;
+use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 
 class InvalidUrlTest extends TestCase
 {

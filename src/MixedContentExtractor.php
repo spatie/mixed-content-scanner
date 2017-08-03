@@ -12,28 +12,19 @@ class MixedContentExtractor
     public static function extract(string $html, string $currentUri): array
     {
         return static::getSearchNodes()
-            ->map(function (array $nodeProperties) use ($html, $currentUri) {
-                [$elementName, $attribute] = $nodeProperties;
-
+            ->mapSpread(function ($tagName, $attribute) use ($html, $currentUri) {
                 return (new DomCrawler($html, $currentUri))
-                    ->filterXPath("//{$elementName}[@{$attribute}]")
-                    ->each(function (DomCrawler $node) use ($elementName, $attribute) {
+                    ->filterXPath("//{$tagName}[@{$attribute}]")
+                    ->each(function (DomCrawler $node) use ($tagName, $attribute) {
                         $url = Url::create($node->attr($attribute));
 
-                        return [$elementName, $url];
+                        return $url->scheme === 'http' ? [$tagName, $url] : null;
                     });
             })
             ->flatten(1)
             ->filter()
-            ->filter(function (array $nodeProperties) {
-                [$elementName, $url] = $nodeProperties;
-
-                return $url->scheme === 'http';
-            })
-            ->map(function (array $nodeProperties) use ($currentUri) {
-                [$elementName, $mixedContentUrl] = $nodeProperties;
-
-                return new MixedContent($elementName, $mixedContentUrl, Url::create($currentUri));
+            ->mapSpread(function ($tagName, $mixedContentUrl) use ($currentUri) {
+                return new MixedContent($tagName, $mixedContentUrl, Url::create($currentUri));
             })
             ->toArray();
     }
@@ -41,23 +32,19 @@ class MixedContentExtractor
     protected static function getSearchNodes(): Collection
     {
         return collect([
-            'audio' => ['src'],
-            'embed' => ['src'],
-            'form' => ['action'],
-            'link' => ['href'],
-            'iframe' => ['src'],
-            'img' => ['src', 'srcset'],
-            'object' => ['data'],
-            'param' => ['value'],
-            'script' => ['src'],
-            'source' => ['src', 'srcset'],
-            'video' => ['src'],
-        ])
-            ->flatMap(function (array $attributes, string $element) {
-                return collect($attributes)
-                    ->map(function (string $attribute) use ($element) {
-                        return [$element, $attribute];
-                    });
-            });
+            ['audio', 'src'],
+            ['embed', 'src'],
+            ['form', 'action'],
+            ['link', 'href'],
+            ['iframe', 'src'],
+            ['img', 'src'],
+            ['img', 'srcset'],
+            ['object', 'data'],
+            ['param', 'value'],
+            ['script', 'src'],
+            ['source', 'src'],
+            ['source', 'srcset'],
+            ['video', 'src'],
+        ]);
     }
 }
