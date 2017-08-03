@@ -2,8 +2,8 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Spatie\Crawler\EmptyCrawlObserver;
 use Spatie\Crawler\Url;
+use Spatie\Crawler\EmptyCrawlObserver;
 
 class MixedContentObserver extends EmptyCrawlObserver
 {
