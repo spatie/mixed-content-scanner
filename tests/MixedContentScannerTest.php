@@ -28,6 +28,5 @@ class MixedContentScannerTest extends TestCase
 
     public function it_will_throw_an_exception_when_given_an_url_with_an_invalid_protocol()
     {
-
     }
 }

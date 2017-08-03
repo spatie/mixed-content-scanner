@@ -13,6 +13,6 @@ class InvalidUrl extends Exception
 
     public static function urlIsEmpty()
     {
-        return new static("You must pass a valid url. Empty value given.");
+        return new static('You must pass a valid url. Empty value given.');
     }
 }
