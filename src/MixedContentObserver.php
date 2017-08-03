@@ -2,15 +2,11 @@
 
 namespace Spatie\MixedContentScanner;
 
+use Spatie\Crawler\EmptyCrawlObserver;
 use Spatie\Crawler\Url;
-use Spatie\Crawler\CrawlObserver;
 
-class MixedContentObserver implements CrawlObserver
+class MixedContentObserver extends EmptyCrawlObserver
 {
-    public function willCrawl(Url $url)
-    {
-    }
-
     public function hasBeenCrawled(Url $crawledUrl, $response, Url $foundOnUrl = null)
     {
         if (! $response) {
