@@ -54,11 +54,4 @@ class MixedContentObserver extends EmptyCrawlObserver
     public function noMixedContentFound(Url $crawledUrl)
     {
     }
-
-    /**
-     * Will be called when the scanner has finished crawling.
-     */
-    public function finishedCrawling()
-    {
-    }
 }
