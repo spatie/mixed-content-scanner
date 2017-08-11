@@ -23,4 +23,13 @@ class MixedContent
 
         $this->foundOnUrl = $foundOnUrl;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'elementName' => $this->elementName,
+            'mixedContentUrl' => (string) $this->mixedContentUrl,
+            'foundOnUrl' => (string) $this->foundOnUrl,
+        ];
+    }
 }
