@@ -2,8 +2,8 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use PHPUnit\Framework\TestCase;
 use Spatie\Crawler\Url;
+use PHPUnit\Framework\TestCase;
 use Spatie\MixedContentScanner\MixedContent;
 
 class MixedContentTest extends TestCase
@@ -22,7 +22,5 @@ class MixedContentTest extends TestCase
             'mixedContentUrl' => 'https://example.com/',
             'foundOnUrl' => 'https://spatie.be/',
         ], $mixedContent->toArray());
-
-
     }
 }
