@@ -15,6 +15,15 @@ class MixedContentExtractor
             ->mapSpread(function ($tagName, $attribute) use ($html, $currentUri) {
                 return (new DomCrawler($html, $currentUri))
                     ->filterXPath("//{$tagName}[@{$attribute}]")
+                    ->reduce(function (DomCrawler $node) {
+                        $relAttr = $node->getNode(0)->attributes->getNamedItem('rel');
+
+                        if ($relAttr !== null && strtolower($relAttr->nodeValue) === 'shortlink') {
+                            return false;
+                        }
+
+                        return true;
+                    })
                     ->each(function (DomCrawler $node) use ($tagName, $attribute) {
                         $url = Url::create($node->attr($attribute));
 
