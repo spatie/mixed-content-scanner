@@ -59,7 +59,7 @@ When scanning a site, the scanner will crawl everypage. On the retrieve html, th
 
 If any of those attributes start with `http://` the element will be regarded as mixed content.
 
-The package does not scan linked `.css` or `.js` files, not does it take inline `<script>` or `<style>` into consideration.
+The package does not scan linked `.css` or `.js` files, nor does it take inline `<script>` or `<style>` and [shortlinks](http://microformats.org/wiki/rel-shortlink) into consideration.
 
 ## Usage
 
