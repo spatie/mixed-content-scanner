@@ -16,13 +16,7 @@ class MixedContentExtractor
                 return (new DomCrawler($html, $currentUri))
                     ->filterXPath("//{$tagName}[@{$attribute}]")
                     ->reduce(function (DomCrawler $node) {
-                        $relAttr = $node->getNode(0)->attributes->getNamedItem('rel');
-
-                        if ($relAttr !== null && strtolower($relAttr->nodeValue) === 'shortlink') {
-                            return false;
-                        }
-
-                        return true;
+                        return ! self::isShortLink($node);
                     })
                     ->each(function (DomCrawler $node) use ($tagName, $attribute) {
                         $url = Url::create($node->attr($attribute));
@@ -55,5 +49,16 @@ class MixedContentExtractor
             ['source', 'srcset'],
             ['video', 'src'],
         ]);
+    }
+
+    protected static function isShortLink(DomCrawler $node)
+    {
+        $relAttribute = $node->getNode(0)->attributes->getNamedItem('rel');
+
+        if (is_null($relAttribute)) {
+            return false;
+        }
+
+        return strtolower($relAttribute->nodeValue) === 'shortlink';
     }
 }
