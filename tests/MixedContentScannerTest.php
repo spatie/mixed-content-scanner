@@ -42,7 +42,7 @@ class MixedContentScannerTest extends TestCase
     /** @test */
     public function it_can_limit_the_amout_of_crawled_urls()
     {
-        foreach(range(1,5) as $crawlCount) {
+        foreach (range(1, 5) as $crawlCount) {
             $logger = new MixedContentLogger();
 
             $scanner = (new MixedContentScanner($logger))->setMaximumCrawlCount($crawlCount);
