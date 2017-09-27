@@ -16,6 +16,9 @@ class MixedContentScanner
     /** @var null|\Spatie\Crawler\CrawlProfile */
     public $crawlProfile;
 
+    /** @var int|null */
+    protected $maximumCrawlCount;
+
     public function __construct(MixedContentObserver $mixedContentObserver)
     {
         $this->mixedContentObserver = $mixedContentObserver;
@@ -27,8 +30,13 @@ class MixedContentScanner
 
         $url = Url::create($url);
 
-        Crawler::create($clientOptions)
-            ->setCrawlProfile($this->crawlProfile ?? new CrawlInternalUrls($url))
+        $crawler = Crawler::create($clientOptions);
+
+        if ($this->maximumCrawlCount) {
+            $crawler->setMaximumCrawlCount($this->maximumCrawlCount);
+        }
+
+        $crawler->setCrawlProfile($this->crawlProfile ?? new CrawlInternalUrls($url))
             ->setCrawlObserver($this->mixedContentObserver)
             ->startCrawling($url);
     }
@@ -40,21 +48,28 @@ class MixedContentScanner
         return $this;
     }
 
+    public function setMaximumCrawlCount(int $maximumCrawlCount)
+    {
+        $this->maximumCrawlCount = $maximumCrawlCount;
+
+        return $this;
+    }
+
     protected function guardAgainstInvalidUrl(string $url)
     {
         if ($url == '') {
             throw InvalidUrl::urlIsEmpty();
         }
 
-        if (! $this->startsWith($url, ['http://', 'https://'])) {
+        if (!$this->startsWith($url, ['http://', 'https://'])) {
             throw InvalidUrl::invalidScheme($url);
         }
     }
 
     protected function startsWith(string $haystack, array $needles): bool
     {
-        foreach ((array) $needles as $needle) {
-            if ($needle != '' && substr($haystack, 0, strlen($needle)) === (string) $needle) {
+        foreach ((array)$needles as $needle) {
+            if ($needle != '' && substr($haystack, 0, strlen($needle)) === (string)$needle) {
                 return true;
             }
         }

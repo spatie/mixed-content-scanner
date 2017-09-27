@@ -137,6 +137,16 @@ Here's an example where ssl verification is being turned off.
 $scanner = new MixedContentScanner($logger, ['verify' => 'false']);
 ```
 
+### Limiting the amount of crawled urls
+
+You can set the maximum amount of crawled urls by using the `setMaximumCrawlCount` method.
+
+```php
+// only 5 urls will be crawled
+
+$scanner = (new MixedContentScanner($logger))->setMaximumCrawlCount(5);
+```
+
 ### Filtering the crawled urls
 
 By default the mixed content scanner will crawl all urls of the hostname given. If you want to filter the urls to be crawled, you can pass the scanner an implementation of `Spatie\Crawler\CrawlProfile`.

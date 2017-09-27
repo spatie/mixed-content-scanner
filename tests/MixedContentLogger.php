@@ -46,4 +46,11 @@ class MixedContentLogger extends MixedContentObserver
 
         Assert::assertTrue(count($foundLogItems) > 0, "Failed asserting that `{$pageUrl}` contains no mixed content. Or maybe that url might not have been crawled");
     }
+
+    public function assertCrawlCount(int $count)
+    {
+        $actualCount = count($this->log);
+
+        Assert::assertEquals($count, $actualCount, "Crawled {$count} urls instead of the expected {$actualCount}");
+    }
 }

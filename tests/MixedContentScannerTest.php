@@ -38,4 +38,18 @@ class MixedContentScannerTest extends TestCase
 
         $scanner->scan('blabla');
     }
+
+    /** @test */
+    public function it_can_limit_the_amout_of_crawled_urls()
+    {
+        foreach(range(1,5) as $crawlCount) {
+            $logger = new MixedContentLogger();
+
+            $scanner = (new MixedContentScanner($logger))->setMaximumCrawlCount($crawlCount);
+
+            $scanner->scan('http://'.Server::getServerUrl());
+
+            $logger->assertCrawlCount($crawlCount);
+        }
+    }
 }

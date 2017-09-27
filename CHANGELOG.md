@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 1.2.0 - 2017-09-27
+
+- add `setMaximumCrawlCount`
+
 ## 1.1.1 - 2017-08-23
 
 - do not mark shortlinks as mixed content

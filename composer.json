@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^7.1",
-        "spatie/crawler": "^2.2",
+        "spatie/crawler": "^2.5",
         "symfony/dom-crawler": "^3.3",
         "tightenco/collect": "^5.4.27"
     },
