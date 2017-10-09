@@ -18,6 +18,14 @@ $app->get('/noMixedContent', function () {
     return view('noMixedContent');
 });
 
+$app->get('/linkRelStyleSheet', function() {
+    return view('linkRelStyleSheet');
+});
+
+$app->get('/linkRelProfile', function() {
+    return view('linkRelProfile');
+});
+
 $app->get('noResponse', function () {
     die();
 });

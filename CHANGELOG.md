@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 1.2.1 - 2017-10-09
+
+- only consider links with rel stylesheet as canidates for mixed content
+
 ## 1.2.0 - 2017-09-27
 
 - add `setMaximumCrawlCount`

@@ -21,6 +21,12 @@ class MixedContentExtractor
                     ->each(function (DomCrawler $node) use ($tagName, $attribute) {
                         $url = Url::create($node->attr($attribute));
 
+                        if ($tagName === 'link' && $attribute === 'href') {
+                            if ($node->attr('rel') !== 'stylesheet') {
+                                return null;
+                            }
+                        }
+
                         return $url->scheme === 'http' ? [$tagName, $url] : null;
                     });
             })

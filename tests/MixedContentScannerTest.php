@@ -28,6 +28,20 @@ class MixedContentScannerTest extends TestCase
     }
 
     /** @test */
+    public function it_will_only_mark_stylesheet_rel_as_mixed_content()
+    {
+        $logger = new MixedContentLogger();
+
+        $scanner = new MixedContentScanner($logger);
+
+        $scanner->scan('http://'.Server::getServerUrl());
+
+        $logger->assertPageHasMixedContent('/linkRelStyleSheet');
+
+        $logger->assertPageHasNoMixedContent('/linkRelProfile');
+    }
+
+    /** @test */
     public function it_will_throw_an_exception_when_given_an_url_with_an_invalid_protocol()
     {
         $logger = new MixedContentLogger();
