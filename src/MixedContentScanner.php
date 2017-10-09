@@ -61,15 +61,15 @@ class MixedContentScanner
             throw InvalidUrl::urlIsEmpty();
         }
 
-        if (!$this->startsWith($url, ['http://', 'https://'])) {
+        if (! $this->startsWith($url, ['http://', 'https://'])) {
             throw InvalidUrl::invalidScheme($url);
         }
     }
 
     protected function startsWith(string $haystack, array $needles): bool
     {
-        foreach ((array)$needles as $needle) {
-            if ($needle != '' && substr($haystack, 0, strlen($needle)) === (string)$needle) {
+        foreach ((array) $needles as $needle) {
+            if ($needle != '' && substr($haystack, 0, strlen($needle)) === (string) $needle) {
                 return true;
             }
         }
