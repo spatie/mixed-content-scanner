@@ -23,7 +23,7 @@ class MixedContentExtractor
 
                         if ($tagName === 'link' && $attribute === 'href') {
                             if ($node->attr('rel') !== 'stylesheet') {
-                                return null;
+                                return;
                             }
                         }
 

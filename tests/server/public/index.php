@@ -18,11 +18,11 @@ $app->get('/noMixedContent', function () {
     return view('noMixedContent');
 });
 
-$app->get('/linkRelStyleSheet', function() {
+$app->get('/linkRelStyleSheet', function () {
     return view('linkRelStyleSheet');
 });
 
-$app->get('/linkRelProfile', function() {
+$app->get('/linkRelProfile', function () {
     return view('linkRelProfile');
 });
 
