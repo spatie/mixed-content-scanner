@@ -2,12 +2,12 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Spatie\Crawler\Url;
+use Psr\Http\Message\UriInterface;
 use Spatie\Crawler\EmptyCrawlObserver;
 
 class MixedContentObserver extends EmptyCrawlObserver
 {
-    public function hasBeenCrawled(Url $crawledUrl, $response, Url $foundOnUrl = null)
+    public function hasBeenCrawled(UriInterface $crawledUrl, $response, ?UriInterface $foundOnUrl = null)
     {
         if (! $response) {
             $this->didNotRespond($crawledUrl, $response);
@@ -31,9 +31,9 @@ class MixedContentObserver extends EmptyCrawlObserver
     /**
      * Will be called when the host did not give a response for the given url.
      *
-     * @param \Spatie\Crawler\Url $crawledUrl
+     * @param \Psr\Http\Message\UriInterface
      */
-    public function didNotRespond(Url $crawledUrl)
+    public function didNotRespond(UriInterface $crawledUrl)
     {
     }
 
@@ -49,9 +49,9 @@ class MixedContentObserver extends EmptyCrawlObserver
     /**
      * Will be called when no mixed content was found on the given url.
      *
-     * @param \Spatie\Crawler\Url $crawledUrl
+     * @param \Psr\Http\Message\UriInterface
      */
-    public function noMixedContentFound(Url $crawledUrl)
+    public function noMixedContentFound(UriInterface $crawledUrl)
     {
     }
 }

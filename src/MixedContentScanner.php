@@ -2,7 +2,7 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Spatie\Crawler\Url;
+use GuzzleHttp\Psr7\Uri;
 use Spatie\Crawler\Crawler;
 use Spatie\Crawler\CrawlProfile;
 use Spatie\Crawler\CrawlInternalUrls;
@@ -28,7 +28,7 @@ class MixedContentScanner
     {
         $this->guardAgainstInvalidUrl($url);
 
-        $url = Url::create($url);
+        $url = new Uri($url);
 
         $crawler = Crawler::create($clientOptions);
 

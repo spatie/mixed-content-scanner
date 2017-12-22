@@ -2,7 +2,7 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Spatie\Crawler\Url;
+use Psr\Http\Message\UriInterface;
 
 class MixedContent
 {
@@ -15,7 +15,7 @@ class MixedContent
     /** @var\Spatie\Crawler\Url */
     public $foundOnUrl = null;
 
-    public function __construct(string $elementName, Url $mixedContentUrl, Url $foundOnUrl)
+    public function __construct(string $elementName, UriInterface $mixedContentUrl, UriInterface $foundOnUrl)
     {
         $this->elementName = $elementName;
 

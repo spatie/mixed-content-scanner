@@ -2,9 +2,8 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Spatie\Crawler\Url;
+use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Collection;
-use Symfony\Component\DomCrawler\Link;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class MixedContentExtractor
@@ -19,7 +18,7 @@ class MixedContentExtractor
                         return ! self::isShortLink($node);
                     })
                     ->each(function (DomCrawler $node) use ($tagName, $attribute) {
-                        $url = Url::create($node->attr($attribute));
+                        $url = new Uri($node->attr($attribute));
 
                         if ($tagName === 'link' && $attribute === 'href') {
                             if ($node->attr('rel') !== 'stylesheet') {
@@ -27,13 +26,13 @@ class MixedContentExtractor
                             }
                         }
 
-                        return $url->scheme === 'http' ? [$tagName, $url] : null;
+                        return $url->getScheme() === 'http' ? [$tagName, $url] : null;
                     });
             })
             ->flatten(1)
             ->filter()
             ->mapSpread(function ($tagName, $mixedContentUrl) use ($currentUri) {
-                return new MixedContent($tagName, $mixedContentUrl, Url::create($currentUri));
+                return new MixedContent($tagName, $mixedContentUrl, new Uri($currentUri));
             })
             ->toArray();
     }
