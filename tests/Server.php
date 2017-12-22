@@ -44,6 +44,11 @@ class Server
         return 'localhost:'.getenv('TEST_SERVER_PORT').'/'.$endPoint;
     }
 
+    public static function getRootServerUrl(): string
+    {
+        return 'localhost:'.getenv('TEST_SERVER_PORT');
+    }
+
     public static function serverHasBooted(): bool
     {
         return @file_get_contents('http://'.self::getServerUrl('booted')) != false;

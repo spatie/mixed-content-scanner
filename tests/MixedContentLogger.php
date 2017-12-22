@@ -2,8 +2,8 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use Spatie\Crawler\Url;
 use PHPUnit\Framework\Assert;
+use Psr\Http\Message\UriInterface;
 use Spatie\MixedContentScanner\MixedContent;
 use Spatie\MixedContentScanner\MixedContentObserver;
 
@@ -16,7 +16,7 @@ class MixedContentLogger extends MixedContentObserver
         $this->log[] = $mixedContent;
     }
 
-    public function noMixedContentFound(Url $crawledUrl)
+    public function noMixedContentFound(UriInterface $crawledUrl)
     {
         $this->log[] = $crawledUrl;
     }
@@ -28,7 +28,7 @@ class MixedContentLogger extends MixedContentObserver
                 return $logItem instanceof MixedContent;
             })
             ->filter(function (MixedContent $mixedContent) use ($pageUrl) {
-                return $mixedContent->foundOnUrl->path === $pageUrl;
+                return $mixedContent->foundOnUrl->getPath() === $pageUrl;
             });
 
         Assert::assertTrue(count($foundLogItems) > 0, "Failed asserting that `{$pageUrl}` contains mixed content");
@@ -38,10 +38,10 @@ class MixedContentLogger extends MixedContentObserver
     {
         $foundLogItems = collect($this->log)
             ->filter(function ($logItem) {
-                return $logItem instanceof Url;
+                return $logItem instanceof UriInterface;
             })
-            ->filter(function (Url $url) use ($pageUrl) {
-                return $url->path === $pageUrl;
+            ->filter(function (UriInterface $url) use ($pageUrl) {
+                return $url->getPath() === $pageUrl;
             });
 
         Assert::assertTrue(count($foundLogItems) > 0, "Failed asserting that `{$pageUrl}` contains no mixed content. Or maybe that url might not have been crawled");
