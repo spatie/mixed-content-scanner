@@ -19,7 +19,15 @@ class MixedContent
     {
         $this->elementName = $elementName;
 
+        if ($mixedContentUrl->getPath() === '') {
+            $mixedContentUrl = $mixedContentUrl->withPath('/');
+        }
+
         $this->mixedContentUrl = $mixedContentUrl;
+
+        if ($foundOnUrl->getPath() === '') {
+            $foundOnUrl = $foundOnUrl->withPath('/');
+        }
 
         $this->foundOnUrl = $foundOnUrl;
     }

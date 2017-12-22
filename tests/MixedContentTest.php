@@ -12,8 +12,8 @@ class MixedContentTest extends TestCase
     public function it_can_convert_itself_to_an_array()
     {
         $elementName = 'a';
-        $mixedContentUrl = new Uri('https://example.com/');
-        $foundOnUrl = new Uri('https://spatie.be/');
+        $mixedContentUrl = new Uri('https://example.com');
+        $foundOnUrl = new Uri('https://spatie.be');
 
         $mixedContent = new MixedContent($elementName, $mixedContentUrl, $foundOnUrl);
 

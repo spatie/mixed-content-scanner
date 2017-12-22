@@ -66,4 +66,18 @@ class MixedContentScannerTest extends TestCase
             $logger->assertCrawlCount($crawlCount);
         }
     }
+
+    /** @test */
+    public function it_can_scan_pages_not_ending_in_slash()
+    {
+        $logger = new MixedContentLogger();
+
+        $scanner = new MixedContentScanner($logger);
+
+        $scanner->scan('http://'.Server::getRootServerUrl());
+
+        $logger->assertPageHasMixedContent('/mixedContent');
+
+        $logger->assertPageHasNoMixedContent('/noMixedContent');
+    }
 }
