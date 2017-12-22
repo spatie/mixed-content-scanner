@@ -2,7 +2,7 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
-## 2.0.0 - 
+## 2.0.0 - 2017-12-22
 
 - upgrade `spatie/crawler` to 3.0
 
