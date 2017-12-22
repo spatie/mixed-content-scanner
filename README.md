@@ -68,7 +68,7 @@ $scanner->scan('https://example.com');
 That `MixedContentScanner` accepts an instance of a class that extends `\Spatie\MixedContentScannerMixedContentObserver`. You should create such a class yourself. Let's take a look at an example implementation.
 
 ```php
-use Spatie\Crawler\Url;
+use Psr\Http\Message\UriInterface;
 use Spatie\MixedContentScanner\MixedContent;
 use Spatie\MixedContentScanner\MixedContentObserver;
 
@@ -77,9 +77,9 @@ class MyMixedContentLogger extends MixedContentObserver
     /**
      * Will be called when the host did not give a response for the given url.
      * 
-     * @param \Spatie\Crawler\Url $crawledUrl
+     * @param \Psr\Http\Message\UriInterface $crawledUrl
      */
-    public function didNotRespond(Url $crawledUrl)
+    public function didNotRespond(UriInterface $crawledUrl)
     {
     }
 
@@ -95,9 +95,9 @@ class MyMixedContentLogger extends MixedContentObserver
     /**
      * Will be called when no mixed content was found on the given url.
      * 
-     * @param \Spatie\Crawler\Url $crawledUrl
+     * @param \Psr\Http\Message\UriInterface $crawledUrl
      */
-    public function noMixedContentFound(Url $crawledUrl)
+    public function noMixedContentFound(UriInterface $crawledUrl)
     {
     }
 
@@ -153,11 +153,11 @@ interface CrawlProfile
     /**
      * Determine if the given url should be crawled.
      *
-     * @param \Spatie\Crawler\Url $url
+     * @param \Psr\Http\Message\UriInterface $url
      *
      * @return bool
      */
-    public function shouldCrawl(Url $url): bool;
+    public function shouldCrawl(UriInterface $url): bool;
 }
 ```
 
