@@ -2,8 +2,8 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use Psr\Http\Message\UriInterface;
 use PHPUnit\Framework\Assert;
+use Psr\Http\Message\UriInterface;
 use Spatie\MixedContentScanner\MixedContent;
 use Spatie\MixedContentScanner\MixedContentObserver;
 
