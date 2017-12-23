@@ -12,7 +12,7 @@ This package contains a class that can scan your site for [mixed content](https:
 Here's an example of how you can use it:
 
 ```php
-use Spatie\MixedContentScanner\MixedContentScanner
+use Spatie\MixedContentScanner\MixedContentScanner;
 
 $logger = new MixedContentLogger();
 
