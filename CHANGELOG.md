@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 2.0.1 - 2017-01-10
+
+- ignore invalid links
+
 ## 2.0.0 - 2017-12-22
 
 - upgrade `spatie/crawler` to 3.0
