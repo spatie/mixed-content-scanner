@@ -2,6 +2,7 @@
 
 namespace Spatie\MixedContentScanner;
 
+use Exception;
 use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Collection;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
@@ -18,15 +19,20 @@ class MixedContentExtractor
                         return ! self::isShortLink($node);
                     })
                     ->each(function (DomCrawler $node) use ($tagName, $attribute) {
-                        $url = new Uri($node->attr($attribute));
+                        try {
+                            $url = new Uri($node->attr($attribute));
 
-                        if ($tagName === 'link' && $attribute === 'href') {
-                            if ($node->attr('rel') !== 'stylesheet') {
-                                return;
+                            if ($tagName === 'link' && $attribute === 'href') {
+                                if ($node->attr('rel') !== 'stylesheet') {
+                                    return;
+                                }
                             }
-                        }
 
-                        return $url->getScheme() === 'http' ? [$tagName, $url] : null;
+                            return $url->getScheme() === 'http' ? [$tagName, $url] : null;
+                        }
+                        catch (Exception $e) {
+                            // ignore invalid links
+                        }
                     });
             })
             ->flatten(1)
