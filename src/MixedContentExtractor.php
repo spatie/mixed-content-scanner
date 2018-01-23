@@ -29,8 +29,7 @@ class MixedContentExtractor
                             }
 
                             return $url->getScheme() === 'http' ? [$tagName, $url] : null;
-                        }
-                        catch (Exception $e) {
+                        } catch (Exception $e) {
                             // ignore invalid links
                         }
                     });
