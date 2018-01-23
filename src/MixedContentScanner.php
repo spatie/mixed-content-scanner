@@ -19,9 +19,14 @@ class MixedContentScanner
     /** @var int|null */
     protected $maximumCrawlCount;
 
+    /** @var callable */
+    protected $configureCrawler;
+
     public function __construct(MixedContentObserver $mixedContentObserver)
     {
         $this->mixedContentObserver = $mixedContentObserver;
+
+        $this->configureCrawler = function (Crawler $crawler) {};
     }
 
     public function scan(string $url, array $clientOptions = [])
@@ -32,6 +37,8 @@ class MixedContentScanner
 
         $crawler = Crawler::create($clientOptions);
 
+        ($this->configureCrawler)($crawler);
+
         if ($this->maximumCrawlCount) {
             $crawler->setMaximumCrawlCount($this->maximumCrawlCount);
         }
@@ -41,6 +48,13 @@ class MixedContentScanner
             ->startCrawling($url);
     }
 
+    public function configureCrawler(callable $callable)
+    {
+        $this->configureCrawler = $callable;
+
+        return $this;
+    }
+
     public function setCrawlProfile(CrawlProfile $crawlProfile)
     {
         $this->crawlProfile = $crawlProfile;
@@ -48,6 +62,9 @@ class MixedContentScanner
         return $this;
     }
 
+    /**
+     * @deprecated You can set this via configureCrawler
+     */
     public function setMaximumCrawlCount(int $maximumCrawlCount)
     {
         $this->maximumCrawlCount = $maximumCrawlCount;
@@ -61,15 +78,15 @@ class MixedContentScanner
             throw InvalidUrl::urlIsEmpty();
         }
 
-        if (! $this->startsWith($url, ['http://', 'https://'])) {
+        if (!$this->startsWith($url, ['http://', 'https://'])) {
             throw InvalidUrl::invalidScheme($url);
         }
     }
 
     protected function startsWith(string $haystack, array $needles): bool
     {
-        foreach ((array) $needles as $needle) {
-            if ($needle != '' && substr($haystack, 0, strlen($needle)) === (string) $needle) {
+        foreach ((array)$needles as $needle) {
+            if ($needle != '' && substr($haystack, 0, strlen($needle)) === (string)$needle) {
                 return true;
             }
         }

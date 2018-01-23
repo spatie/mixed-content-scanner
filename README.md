@@ -173,6 +173,20 @@ $scanner = new MixedContentScanner($logger);
 $scanner->setCrawlProfile(new MyCrawlProfile);
 ```
 
+## Customizing the crawler
+
+The scanner is powered by [our homegrown Crawler](https://github.com/spatie/crawler). You can call any methods on the crawler before the crawling process starts by calling `configureCrawler` on a `MixedContentScanner`.
+
+```php
+use Spatie\Crawler\Crawler;
+use Spatie\MixedContentScanner\MixedContentScanner;
+
+$scanner = (new MixedContentScanner($logger))
+    ->configureCrawler(function(Crawler $crawler) {
+        $crawler->setConcurrency(1) // now all urls will be crawled one by one 
+    });
+```
+
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
