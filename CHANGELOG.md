@@ -2,7 +2,12 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 2.1.1 - 2018-01-23
+
+- add `configureCrawler`
+
 ## 2.1.0 - 2018-01-23
+**broken release, do not use**
 
 - add `configureCrawler`
 
