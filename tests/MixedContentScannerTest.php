@@ -2,8 +2,8 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use PHPUnit\Framework\TestCase;
 use Spatie\Crawler\Crawler;
+use PHPUnit\Framework\TestCase;
 use Spatie\MixedContentScanner\MixedContentScanner;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 
@@ -60,7 +60,7 @@ class MixedContentScannerTest extends TestCase
         foreach (range(1, 3) as $crawlCount) {
             $logger = new MixedContentLogger();
 
-            $scanner = (new MixedContentScanner($logger))->configureCrawler(function(Crawler $crawler) use ($crawlCount) {
+            $scanner = (new MixedContentScanner($logger))->configureCrawler(function (Crawler $crawler) use ($crawlCount) {
                 $crawler->setMaximumCrawlCount($crawlCount);
             });
 
