@@ -61,7 +61,7 @@ class MixedContentExtractor
         ]);
     }
 
-    protected static function isShortLink(DomCrawler $node)
+    protected static function isShortLink(DomCrawler $node): bool
     {
         $relAttribute = $node->getNode(0)->attributes->getNamedItem('rel');
 
