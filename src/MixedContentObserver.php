@@ -2,23 +2,20 @@
 
 namespace Spatie\MixedContentScanner;
 
+use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
+use Spatie\Crawler\CrawlObserver;
 use Spatie\Crawler\EmptyCrawlObserver;
 
-class MixedContentObserver extends EmptyCrawlObserver
+class MixedContentObserver extends CrawlObserver
 {
-    public function hasBeenCrawled(UriInterface $crawledUrl, $response, ?UriInterface $foundOnUrl = null)
+    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
     {
-        if (! $response) {
-            $this->didNotRespond($crawledUrl, $response);
-
-            return;
-        }
-
-        $mixedContent = MixedContentExtractor::extract((string) $response->getBody(), $crawledUrl);
+        $mixedContent = MixedContentExtractor::extract((string) $response->getBody(), $url);
 
         if (! count($mixedContent)) {
-            $this->noMixedContentFound($crawledUrl);
+            $this->noMixedContentFound($url);
 
             return;
         }
@@ -28,13 +25,13 @@ class MixedContentObserver extends EmptyCrawlObserver
         }
     }
 
-    /**
-     * Will be called when the host did not give a response for the given url.
-     *
-     * @param \Psr\Http\Message\UriInterface
-     */
-    public function didNotRespond(UriInterface $crawledUrl)
+    public function crawlFailed(
+        UriInterface $url,
+        RequestException $requestException,
+        ?UriInterface $foundOnUrl = null
+    )
     {
+
     }
 
     /**

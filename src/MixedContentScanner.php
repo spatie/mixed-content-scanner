@@ -63,16 +63,6 @@ class MixedContentScanner
         return $this;
     }
 
-    /**
-     * @deprecated You can set this via configureCrawler
-     */
-    public function setMaximumCrawlCount(int $maximumCrawlCount)
-    {
-        $this->maximumCrawlCount = $maximumCrawlCount;
-
-        return $this;
-    }
-
     protected function guardAgainstInvalidUrl(string $url)
     {
         if ($url == '') {

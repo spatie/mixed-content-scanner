@@ -75,15 +75,6 @@ use Spatie\MixedContentScanner\MixedContentObserver;
 class MyMixedContentLogger extends MixedContentObserver
 {
     /**
-     * Will be called when the host did not give a response for the given url.
-     * 
-     * @param \Psr\Http\Message\UriInterface $crawledUrl
-     */
-    public function didNotRespond(UriInterface $crawledUrl)
-    {
-    }
-
-    /**
      * Will be called when mixed content was found.
      * 
      * @param \Spatie\MixedContentScanner\MixedContent $mixedContent
@@ -129,26 +120,18 @@ Here's an example where ssl verification is being turned off.
 $scanner = new MixedContentScanner($logger, ['verify' => 'false']);
 ```
 
-### Limiting the amount of crawled urls
-
-You can set the maximum amount of crawled urls by using the `setMaximumCrawlCount` method.
-
-```php
-// only 5 urls will be crawled
-
-$scanner = (new MixedContentScanner($logger))->setMaximumCrawlCount(5);
-```
-
 ### Filtering the crawled urls
 
-By default the mixed content scanner will crawl all urls of the hostname given. If you want to filter the urls to be crawled, you can pass the scanner an implementation of `Spatie\Crawler\CrawlProfile`.
+By default the mixed content scanner will crawl all urls of the hostname given. If you want to filter the urls to be crawled, you can pass the scanner a class that extends `Spatie\Crawler\CrawlProfile`.
 
-Here's the interface:
+Here's the contents of that class:
 
 ```php
 namespace Spatie\Crawler;
 
-interface CrawlProfile
+use Psr\Http\Message\UriInterface;
+
+abstract class CrawlProfile
 {
     /**
      * Determine if the given url should be crawled.
@@ -157,7 +140,7 @@ interface CrawlProfile
      *
      * @return bool
      */
-    public function shouldCrawl(UriInterface $url): bool;
+    abstract public function shouldCrawl(UriInterface $url): bool;
 }
 ```
 

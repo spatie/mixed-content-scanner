@@ -3,6 +3,7 @@
 namespace Spatie\MixedContentScanner\Test;
 
 use PHPUnit\Framework\TestCase;
+use Spatie\Crawler\Crawler;
 use Spatie\MixedContentScanner\MixedContentScanner;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 
@@ -56,10 +57,12 @@ class MixedContentScannerTest extends TestCase
     /** @test */
     public function it_can_limit_the_amout_of_crawled_urls()
     {
-        foreach (range(1, 5) as $crawlCount) {
+        foreach (range(1, 3) as $crawlCount) {
             $logger = new MixedContentLogger();
 
-            $scanner = (new MixedContentScanner($logger))->setMaximumCrawlCount($crawlCount);
+            $scanner = (new MixedContentScanner($logger))->configureCrawler(function(Crawler $crawler) use ($crawlCount) {
+                $crawler->setMaximumCrawlCount($crawlCount);
+            });
 
             $scanner->scan('http://'.Server::getServerUrl());
 
