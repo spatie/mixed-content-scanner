@@ -2,11 +2,10 @@
 
 namespace Spatie\MixedContentScanner;
 
-use GuzzleHttp\Exception\RequestException;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\UriInterface;
 use Spatie\Crawler\CrawlObserver;
-use Spatie\Crawler\EmptyCrawlObserver;
+use Psr\Http\Message\UriInterface;
+use Psr\Http\Message\ResponseInterface;
+use GuzzleHttp\Exception\RequestException;
 
 class MixedContentObserver extends CrawlObserver
 {
@@ -29,9 +28,7 @@ class MixedContentObserver extends CrawlObserver
         UriInterface $url,
         RequestException $requestException,
         ?UriInterface $foundOnUrl = null
-    )
-    {
-
+    ) {
     }
 
     /**
