@@ -2,6 +2,11 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 3.0.2 - 2018-03-02
+
+- Update `spatie/crawler` to support correct `Collection` packages.
+- Remove unneeded `cighten/collect` dependency.
+
 ## 3.0.1 - 2018-03-01
 
 - improve constraints
