@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 3.1.0 - 2018-03-22
+
+- Respect robots.
+
 ## 3.0.2 - 2018-03-02
 
 - Update `spatie/crawler` to support correct `Collection` packages.
