@@ -117,7 +117,8 @@ You can pass an array of options to the second argument of `MixedContentScanner`
 Here's an example where ssl verification is being turned off.
 
 ```php
-$scanner = new MixedContentScanner($logger, ['verify' => 'false']);
+$scanner = new MixedContentScanner($logger);
+$scanner->scan('https://laravel.com', ['verify' => 'false']);
 ```
 
 ### Filtering the crawled urls
