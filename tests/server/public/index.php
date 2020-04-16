@@ -26,6 +26,10 @@ $app->get('/linkRelProfile', function () {
     return view('linkRelProfile');
 });
 
+$app->get('/linkedCss', function () {
+    return view('linkedCss');
+});
+
 $app->get('noResponse', function () {
     die();
 });

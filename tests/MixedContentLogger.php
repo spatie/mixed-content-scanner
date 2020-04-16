@@ -53,4 +53,29 @@ class MixedContentLogger extends MixedContentObserver
 
         Assert::assertEquals($count, $actualCount, "Crawled {$count} urls instead of the expected {$actualCount}");
     }
+
+    public function assertPageHasLinkedCssWithMixedContent(string $pageUrl)
+    {
+        $log = collect($this->log)->filter(function ($logItem) {
+            return $logItem instanceof MixedContent;
+        })->map(function ($item) {
+            return (string) $item->mixedContentUrl;
+        })->toArray();
+        Assert::assertEquals($log, [
+            'http://localhost:9000/css/linked.css',
+            'http://example.com/image.jpg',
+        ]);
+    }
+
+    public function assertPageHasLinkedCssThatWasNotScanned(string $pageUrl)
+    {
+        $log = collect($this->log)->filter(function ($logItem) {
+            return $logItem instanceof MixedContent;
+        })->map(function ($item) {
+            return (string) $item->mixedContentUrl;
+        })->toArray();
+        Assert::assertEquals($log, [
+            'http://localhost:9000/css/linked.css',
+        ]);
+    }
 }

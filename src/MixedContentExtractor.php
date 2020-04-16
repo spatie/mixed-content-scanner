@@ -5,26 +5,32 @@ namespace Spatie\MixedContentScanner;
 use Exception;
 use GuzzleHttp\Psr7\Uri;
 use Illuminate\Support\Collection;
+use Psr\Http\Message\UriInterface;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class MixedContentExtractor
 {
-    public static function extract(string $html, string $currentUri): array
+    public static function extract(string $html, UriInterface $currentUri): array
     {
-        return static::getSearchNodes()
-            ->mapSpread(function ($tagName, $attribute) use ($html, $currentUri) {
-                return (new DomCrawler($html, $currentUri))
+        $linkedCss = [];
+        $mixed = static::getSearchNodes()
+            ->mapSpread(function ($tagName, $attribute) use ($html, $currentUri, &$linkedCss) {
+                return (new DomCrawler($html, (string) $currentUri))
                     ->filterXPath("//{$tagName}[@{$attribute}]")
                     ->reduce(function (DomCrawler $node) {
                         return ! self::isShortLink($node);
                     })
-                    ->each(function (DomCrawler $node) use ($tagName, $attribute) {
+                    ->each(function (DomCrawler $node) use ($tagName, $attribute, &$linkedCss) {
                         try {
                             $url = new Uri($node->attr($attribute));
 
                             if ($tagName === 'link' && $attribute === 'href') {
                                 if ($node->attr('rel') !== 'stylesheet') {
                                     return;
+                                }
+
+                                if (self::hrefIsCss($url)) {
+                                    $linkedCss[] = $url;
                                 }
                             }
 
@@ -37,9 +43,11 @@ class MixedContentExtractor
             ->flatten(1)
             ->filter()
             ->mapSpread(function ($tagName, $mixedContentUrl) use ($currentUri) {
-                return new MixedContent($tagName, $mixedContentUrl, new Uri($currentUri));
+                return new MixedContent($tagName, $mixedContentUrl, $currentUri);
             })
             ->toArray();
+
+        return [$mixed, $linkedCss];
     }
 
     protected static function getSearchNodes(): Collection
@@ -70,5 +78,10 @@ class MixedContentExtractor
         }
 
         return strtolower($relAttribute->nodeValue) === 'shortlink';
+    }
+
+    protected static function hrefIsCss(UriInterface $uri): bool
+    {
+        return strpos((string) $uri, '.css') !== false;
     }
 }

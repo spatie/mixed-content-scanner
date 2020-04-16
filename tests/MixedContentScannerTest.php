@@ -2,10 +2,10 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use Spatie\Crawler\Crawler;
 use PHPUnit\Framework\TestCase;
-use Spatie\MixedContentScanner\MixedContentScanner;
+use Spatie\Crawler\Crawler;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
+use Spatie\MixedContentScanner\MixedContentScanner;
 
 class MixedContentScannerTest extends TestCase
 {
@@ -82,5 +82,31 @@ class MixedContentScannerTest extends TestCase
         $logger->assertPageHasMixedContent('/mixedContent');
 
         $logger->assertPageHasNoMixedContent('/noMixedContent');
+    }
+
+    /** @test */
+    public function it_will_not_scan_linked_css_by_default()
+    {
+        $logger = new MixedContentLogger();
+
+        $scanner = new MixedContentScanner($logger);
+
+        $scanner->scan('http://'.Server::getRootServerUrl().'/linkedCss');
+
+        $logger->assertPageHasLinkedCssThatWasNotScanned('/linkedCss');
+    }
+
+    /** @test */
+    public function it_can_scan_linked_css()
+    {
+        $logger = new MixedContentLogger();
+
+        $logger->withLinkedCss();
+
+        $scanner = new MixedContentScanner($logger);
+
+        $scanner->scan('http://'.Server::getRootServerUrl().'/linkedCss');
+
+        $logger->assertPageHasLinkedCssWithMixedContent('/linkedCss');
     }
 }

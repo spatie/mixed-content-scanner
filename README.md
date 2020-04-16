@@ -51,7 +51,15 @@ When scanning a site, the scanner will crawl everypage. On the retrieve html, th
 
 If any of those attributes start with `http://` the element will be regarded as mixed content.
 
-The package does not scan linked `.css` or `.js` files, nor does it take inline `<script>` or `<style>` and [shortlinks](http://microformats.org/wiki/rel-shortlink) into consideration.
+By default, the package does not scan linked `.css` or `.js` files, nor does it take inline `<script>` or `<style>` and [shortlinks](http://microformats.org/wiki/rel-shortlink) into consideration.
+
+## Linked `.css`
+To have the package scan linked `.css` files, call ->withLinkedCss() on the Observer class. This will search linked `.css` files for any uses of url() that contains http://
+```php
+$observer = new MixedContentObserver();
+$observer->withLinkedCss();
+$scanner = new MixedContentScanner($observer);
+```
 
 ## Usage
 
