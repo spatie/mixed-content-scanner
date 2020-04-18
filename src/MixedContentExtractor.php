@@ -10,7 +10,7 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 class MixedContentExtractor
 {
-    public static function extract(string $html, UriInterface $currentUri): array
+    public static function extract(string $html, string $currentUri): array
     {
         $linkedCss = [];
         $mixed = static::getSearchNodes()
@@ -43,7 +43,7 @@ class MixedContentExtractor
             ->flatten(1)
             ->filter()
             ->mapSpread(function ($tagName, $mixedContentUrl) use ($currentUri) {
-                return new MixedContent($tagName, $mixedContentUrl, $currentUri);
+                return new MixedContent($tagName, $mixedContentUrl, new Uri($currentUri));
             })
             ->toArray();
 

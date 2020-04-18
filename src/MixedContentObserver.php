@@ -19,7 +19,7 @@ class MixedContentObserver extends CrawlObserver
 
         if ($this->shouldExtractLinkedCss) {
             foreach ($linkedCss as $css) {
-                $mixedContent = array_merge((array) $mixedContent, (array) $this->linkedCssFound($css, $url));
+                $mixedContent = array_merge($mixedContent, $this->getMixedContentFromLinkedCss($css, $url));
             }
         }
 
@@ -59,13 +59,18 @@ class MixedContentObserver extends CrawlObserver
     {
     }
 
-    public function linkedCssFound(UriInterface $css, UriInterface $linkedByUrl)
+    public function getMixedContentFromLinkedCss(UriInterface $css, UriInterface $linkedByUrl)
     {
         if (! in_array($css, $this->crawledCss)) {
             $this->crawledCss[] = $css;
-
-            return MixedContentLinkedCssExtractor::extract(Body::get($css), $css, $linkedByUrl);
+            try {
+                return MixedContentLinkedCssExtractor::extract(Body::get($css), $css, $linkedByUrl);
+            } catch (RequestException $e) {
+                $this->crawlFailed($css, $e, $linkedByUrl);
+            }
         }
+
+        return [];
     }
 
     public function withLinkedCss()
