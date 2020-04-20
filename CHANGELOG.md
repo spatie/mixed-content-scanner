@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 3.2.0 - 2020-04-20
+
+- scan linked css (#27)
+
 ## 3.1.0 - 2018-03-22
 
 - Respect robots.
