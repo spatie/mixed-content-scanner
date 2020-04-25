@@ -2,6 +2,14 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 3.3.0
+
+- revert changes in 3.2.0
+
+## 3.2.0
+
+- add scan css
+
 ## 3.1.0 - 2018-03-22
 
 - Respect robots.
