@@ -2,20 +2,20 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use Spatie\Crawler\Crawler;
 use PHPUnit\Framework\TestCase;
-use Spatie\MixedContentScanner\MixedContentScanner;
+use Spatie\Crawler\Crawler;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
+use Spatie\MixedContentScanner\MixedContentScanner;
 
 class MixedContentScannerTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         Server::boot();
     }
 
     /** @test */
-    public function if_can_find_mixed_content()
+    public function it_can_find_mixed_content()
     {
         $logger = new MixedContentLogger();
 

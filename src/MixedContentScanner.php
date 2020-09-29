@@ -2,25 +2,22 @@
 
 namespace Spatie\MixedContentScanner;
 
+use Closure;
 use GuzzleHttp\Psr7\Uri;
 use Spatie\Crawler\Crawler;
-use Spatie\Crawler\CrawlProfile;
-use Spatie\Crawler\CrawlInternalUrls;
+use Spatie\Crawler\CrawlProfiles\CrawlInternalUrls;
+use Spatie\Crawler\CrawlProfiles\CrawlProfile;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 
 class MixedContentScanner
 {
-    /** @var \Spatie\MixedContentScanner\MixedContentObserver */
-    public $mixedContentObserver;
+    public MixedContentObserver $mixedContentObserver;
 
-    /** @var null|\Spatie\Crawler\CrawlProfile */
-    public $crawlProfile;
+    public ?CrawlProfile $crawlProfile = null;
 
-    /** @var int|null */
-    protected $maximumCrawlCount;
+    protected ?int $maximumCrawlCount = null;
 
-    /** @var callable */
-    protected $configureCrawler;
+    protected Closure $configureCrawler;
 
     public function __construct(MixedContentObserver $mixedContentObserver)
     {
@@ -30,7 +27,7 @@ class MixedContentScanner
         };
     }
 
-    public function scan(string $url, array $clientOptions = [])
+    public function scan(string $url, array $clientOptions = []): void
     {
         $this->guardAgainstInvalidUrl($url);
 
@@ -49,23 +46,23 @@ class MixedContentScanner
             ->startCrawling($url);
     }
 
-    public function configureCrawler(callable $callable)
+    public function configureCrawler(callable $callable): self
     {
         $this->configureCrawler = $callable;
 
         return $this;
     }
 
-    public function setCrawlProfile(CrawlProfile $crawlProfile)
+    public function setCrawlProfile(CrawlProfile $crawlProfile): self
     {
         $this->crawlProfile = $crawlProfile;
 
         return $this;
     }
 
-    protected function guardAgainstInvalidUrl(string $url)
+    protected function guardAgainstInvalidUrl(string $url): void
     {
-        if ($url == '') {
+        if ($url === '') {
             throw InvalidUrl::urlIsEmpty();
         }
 

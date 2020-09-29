@@ -1,10 +1,8 @@
 # Scan your site for mixed content
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/mixed-content-scanner.svg?style=flat-square)](https://packagist.org/packages/spatie/mixed-content-scanner)
-[![Build Status](https://img.shields.io/travis/spatie/mixed-content-scanner/master.svg?style=flat-square)](https://travis-ci.org/spatie/mixed-content-scanner)
-[![SensioLabsInsight](https://img.shields.io/sensiolabs/i/7a85bc21-0d7b-4b0d-875d-da5c5dcb853e.svg?style=flat-square)](https://insight.sensiolabs.com/projects/7a85bc21-0d7b-4b0d-875d-da5c5dcb853e)
-[![Quality Score](https://img.shields.io/scrutinizer/g/spatie/mixed-content-scanner.svg?style=flat-square)](https://scrutinizer-ci.com/g/spatie/mixed-content-scanner)
-[![StyleCI](https://styleci.io/repos/28050386/shield?branch=master)](https://styleci.io/repos/28050386)
+![Tests](https://github.com/spatie/mixed-content-scanner/workflows/Tests/badge.svg)
+![Check & fix styling](https://github.com/spatie/mixed-content-scanner/workflows/Code%20style/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/mixed-content-scanner.svg?style=flat-square)](https://packagist.org/packages/spatie/mixed-content-scanner)
 
 This package contains a class that can scan your site for [mixed content](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content).
@@ -21,7 +19,7 @@ $scanner = new MixedContentScanner($logger);
 $scanner->scan('https://example.com');
 ```
 
-`MixedContentLogger` is a class that contains methods that get called when mixed content is (not) found. 
+`MixedContentLogger` is a class containing methods that get called when mixed content is (not) found. 
 
 If you don't need a custom implementation but simply want to look for mixed content using a command line tool, take a look at [our mixed-content-scanner-cli package](https://github.com/spatie/mixed-content-scanner-cli).
 
@@ -89,7 +87,7 @@ class MyMixedContentLogger extends MixedContentObserver
      * 
      * @param \Spatie\MixedContentScanner\MixedContent $mixedContent
      */
-    public function mixedContentFound(MixedContent $mixedContent)
+    public function mixedContentFound(MixedContent $mixedContent): void
     {
     }
 
@@ -98,20 +96,20 @@ class MyMixedContentLogger extends MixedContentObserver
      * 
      * @param \Psr\Http\Message\UriInterface $crawledUrl
      */
-    public function noMixedContentFound(UriInterface $crawledUrl)
+    public function noMixedContentFound(UriInterface $crawledUrl): void
     {
     }
 
     /**
      * Will be called when the scanner has finished crawling.
      */
-    public function finishedCrawling()
+    public function finishedCrawling(): void
     {
     }
 }
 ```
 
-Of course you should supply a function body to these methods yourself. If you don't need a function just leave it off.
+Of course, you should supply a function body to these methods yourself. If you don't need a function just leave it off.
 
 The `$mixedContent` variable the `mixedContentFound` class accept is an instance of `\Spatie\MixedContentScanner\MixedContent` which has these three properties:
 
@@ -133,9 +131,9 @@ $scanner->scan('https://laravel.com', ['verify' => 'false']);
 
 ### Filtering the crawled urls
 
-By default the mixed content scanner will crawl all urls of the hostname given. If you want to filter the urls to be crawled, you can pass the scanner a class that extends `Spatie\Crawler\CrawlProfile`.
+By default, the mixed content scanner will crawl all urls of the hostname given. If you want to filter the urls to be crawled, you can pass the scanner a class that extends `Spatie\Crawler\CrawlProfile`.
 
-Here's the contents of that class:
+Here's the content of that class:
 
 ```php
 namespace Spatie\Crawler;

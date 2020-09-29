@@ -6,14 +6,11 @@ use Psr\Http\Message\UriInterface;
 
 class MixedContent
 {
-    /** string */
-    public $elementName = '';
+    public string $elementName = '';
 
-    /** @var\Spatie\Crawler\Url */
-    public $mixedContentUrl = null;
+    public ?UriInterface $mixedContentUrl = null;
 
-    /** @var\Spatie\Crawler\Url */
-    public $foundOnUrl = null;
+    public ?UriInterface $foundOnUrl = null;
 
     public function __construct(string $elementName, UriInterface $mixedContentUrl, UriInterface $foundOnUrl)
     {

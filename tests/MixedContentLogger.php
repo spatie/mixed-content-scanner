@@ -9,19 +9,19 @@ use Spatie\MixedContentScanner\MixedContentObserver;
 
 class MixedContentLogger extends MixedContentObserver
 {
-    protected $log = [];
+    protected array $log = [];
 
-    public function mixedContentFound(MixedContent $mixedContent)
+    public function mixedContentFound(MixedContent $mixedContent): void
     {
         $this->log[] = $mixedContent;
     }
 
-    public function noMixedContentFound(UriInterface $crawledUrl)
+    public function noMixedContentFound(UriInterface $crawledUrl): void
     {
         $this->log[] = $crawledUrl;
     }
 
-    public function assertPageHasMixedContent(string $pageUrl)
+    public function assertPageHasMixedContent(string $pageUrl): void
     {
         $foundLogItems = collect($this->log)
             ->filter(function ($logItem) {
@@ -34,7 +34,7 @@ class MixedContentLogger extends MixedContentObserver
         Assert::assertTrue(count($foundLogItems) > 0, "Failed asserting that `{$pageUrl}` contains mixed content");
     }
 
-    public function assertPageHasNoMixedContent(string $pageUrl)
+    public function assertPageHasNoMixedContent(string $pageUrl): void
     {
         $foundLogItems = collect($this->log)
             ->filter(function ($logItem) {
@@ -47,7 +47,7 @@ class MixedContentLogger extends MixedContentObserver
         Assert::assertTrue(count($foundLogItems) > 0, "Failed asserting that `{$pageUrl}` contains no mixed content. Or maybe that url might not have been crawled");
     }
 
-    public function assertCrawlCount(int $count)
+    public function assertCrawlCount(int $count): void
     {
         $actualCount = count($this->log);
 
