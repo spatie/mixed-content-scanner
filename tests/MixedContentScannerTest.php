@@ -9,13 +9,13 @@ use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 
 class MixedContentScannerTest extends TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         Server::boot();
     }
 
     /** @test */
-    public function if_can_find_mixed_content()
+    public function it_can_find_mixed_content()
     {
         $logger = new MixedContentLogger();
 

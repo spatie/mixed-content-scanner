@@ -6,8 +6,7 @@ use GuzzleHttp\Client;
 
 class Server
 {
-    /** @var \GuzzleHttp\Client */
-    protected $client;
+    protected Client $client;
 
     public function __construct(Client $client = null)
     {

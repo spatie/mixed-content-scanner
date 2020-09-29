@@ -2,14 +2,14 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Spatie\Crawler\CrawlObserver;
 use Psr\Http\Message\UriInterface;
 use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
+use Spatie\Crawler\CrawlObservers\CrawlObserver;
 
 class MixedContentObserver extends CrawlObserver
 {
-    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null)
+    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null): void
     {
         $mixedContent = MixedContentExtractor::extract((string) $response->getBody(), $url);
 
@@ -28,7 +28,7 @@ class MixedContentObserver extends CrawlObserver
         UriInterface $url,
         RequestException $requestException,
         ?UriInterface $foundOnUrl = null
-    ) {
+    ): void {
     }
 
     /**
@@ -45,7 +45,7 @@ class MixedContentObserver extends CrawlObserver
      *
      * @param \Psr\Http\Message\UriInterface
      */
-    public function noMixedContentFound(UriInterface $crawledUrl)
+    public function noMixedContentFound(UriInterface $crawledUrl): void
     {
     }
 }
