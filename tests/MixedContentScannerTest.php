@@ -2,10 +2,10 @@
 
 namespace Spatie\MixedContentScanner\Test;
 
-use Spatie\Crawler\Crawler;
 use PHPUnit\Framework\TestCase;
-use Spatie\MixedContentScanner\MixedContentScanner;
+use Spatie\Crawler\Crawler;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
+use Spatie\MixedContentScanner\MixedContentScanner;
 
 class MixedContentScannerTest extends TestCase
 {
