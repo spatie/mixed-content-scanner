@@ -9,7 +9,7 @@ use Spatie\MixedContentScanner\MixedContentObserver;
 
 class MixedContentLogger extends MixedContentObserver
 {
-    protected $log = [];
+    protected array $log = [];
 
     public function mixedContentFound(MixedContent $mixedContent): void
     {
