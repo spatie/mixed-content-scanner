@@ -16,7 +16,7 @@ class MixedContentExtractor
                 return (new DomCrawler($html, $currentUri))
                     ->filterXPath("//{$tagName}[@{$attribute}]")
                     ->reduce(function (DomCrawler $node) {
-                        return !self::isShortLink($node);
+                        return ! self::isShortLink($node);
                     })
                     ->each(function (DomCrawler $node) use ($tagName, $attribute) {
                         try {
