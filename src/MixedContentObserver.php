@@ -2,9 +2,9 @@
 
 namespace Spatie\MixedContentScanner;
 
-use Psr\Http\Message\UriInterface;
-use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 use Spatie\Crawler\CrawlObservers\CrawlObserver;
 
 class MixedContentObserver extends CrawlObserver
