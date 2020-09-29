@@ -17,7 +17,7 @@ class Server
 
     public static function boot()
     {
-        if (!file_exists(__DIR__.'/server/vendor')) {
+        if (! file_exists(__DIR__.'/server/vendor')) {
             exec('cd "'.__DIR__.'/server"; composer install');
         }
 
@@ -29,7 +29,7 @@ class Server
 
         $pid = exec($startServerCommand);
 
-        while (!static::serverHasBooted()) {
+        while (! static::serverHasBooted()) {
             usleep(1000);
         }
 
