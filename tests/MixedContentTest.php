@@ -18,9 +18,9 @@ class MixedContentTest extends TestCase
         $mixedContent = new MixedContent($elementName, $mixedContentUrl, $foundOnUrl);
 
         $this->assertEquals([
-            'elementName' => 'a',
+            'elementName'     => 'a',
             'mixedContentUrl' => 'https://example.com/',
-            'foundOnUrl' => 'https://spatie.be/',
+            'foundOnUrl'      => 'https://spatie.be/',
         ], $mixedContent->toArray());
     }
 }
