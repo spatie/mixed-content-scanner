@@ -19,7 +19,7 @@ $scanner = new MixedContentScanner($logger);
 $scanner->scan('https://example.com');
 ```
 
-`MixedContentLogger` is a class that contains methods that get called when mixed content is (not) found. 
+`MixedContentLogger` is a class containing methods that get called when mixed content is (not) found. 
 
 If you don't need a custom implementation but simply want to look for mixed content using a command line tool, take a look at [our mixed-content-scanner-cli package](https://github.com/spatie/mixed-content-scanner-cli).
 
