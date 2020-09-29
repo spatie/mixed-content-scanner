@@ -13,7 +13,7 @@ class MixedContentObserver extends CrawlObserver
     {
         $mixedContent = MixedContentExtractor::extract((string) $response->getBody(), $url);
 
-        if (! count($mixedContent)) {
+        if (!count($mixedContent)) {
             $this->noMixedContentFound($url);
 
             return;
