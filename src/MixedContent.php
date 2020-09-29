@@ -32,9 +32,9 @@ class MixedContent
     public function toArray(): array
     {
         return [
-            'elementName' => $this->elementName,
+            'elementName'     => $this->elementName,
             'mixedContentUrl' => (string) $this->mixedContentUrl,
-            'foundOnUrl' => (string) $this->foundOnUrl,
+            'foundOnUrl'      => (string) $this->foundOnUrl,
         ];
     }
 }
