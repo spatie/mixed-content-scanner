@@ -27,7 +27,7 @@ $app->get('/linkRelProfile', function () {
 });
 
 $app->get('noResponse', function () {
-    die();
+    exit();
 });
 
 $app->get('redirect', function () {
