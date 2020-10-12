@@ -25,7 +25,7 @@ If you don't need a custom implementation but simply want to look for mixed cont
 
 ## Support us
 
-[![Image](https://github-ads.s3.eu-central-1.amazonaws.com/mixed-content-scanner.jpg)](https://spatie.be/github-ad-click/mixed-content-scanner)
+[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/mixed-content-scanner.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/mixed-content-scanner)
 
 We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
 
