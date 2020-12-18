@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 4.0.1
+
+- allow PHP 8
+
 ## 3.3.0
 
 - revert changes in 3.2.0
