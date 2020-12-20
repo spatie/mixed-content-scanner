@@ -9,7 +9,7 @@ use Spatie\MixedContentScanner\MixedContentScanner;
 
 class MixedContentScannerTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         Server::boot();
     }
