@@ -61,7 +61,7 @@ class MixedContentScannerTest extends TestCase
             $logger = new MixedContentLogger();
 
             $scanner = (new MixedContentScanner($logger))->configureCrawler(function (Crawler $crawler) use ($crawlCount) {
-                $crawler->setMaximumCrawlCount($crawlCount);
+                $crawler->setTotalCrawlLimit($crawlCount);
             });
 
             $scanner->scan('http://'.Server::getServerUrl());

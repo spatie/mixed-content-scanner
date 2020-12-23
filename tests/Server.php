@@ -25,7 +25,7 @@ class Server
             return;
         }
 
-        $startServerCommand = 'php -S '.static::getServerUrl().' -t ./tests/server/public > /dev/null 2>&1 & echo $!';
+        $startServerCommand = 'php -S '.static::getRootServerUrl().' -t ./tests/server/public > /dev/null 2>&1 & echo $!';
 
         $pid = exec($startServerCommand);
 
