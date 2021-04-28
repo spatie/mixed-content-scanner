@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 4.0.3
+
+- allow crawler v7
+
 ## 4.0.2
 
 - allow crawler v6
