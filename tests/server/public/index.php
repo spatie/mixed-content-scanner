@@ -6,35 +6,35 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__.'/../')
 );
 
-$app->get('/', function () {
+$app->router->get('/', function () {
     return view('home');
 });
 
-$app->get('/mixedContent', function () {
+$app->router->get('/mixedContent', function () {
     return view('mixedContent');
 });
 
-$app->get('/noMixedContent', function () {
+$app->router->get('/noMixedContent', function () {
     return view('noMixedContent');
 });
 
-$app->get('/linkRelStyleSheet', function () {
+$app->router->get('/linkRelStyleSheet', function () {
     return view('linkRelStyleSheet');
 });
 
-$app->get('/linkRelProfile', function () {
+$app->router->get('/linkRelProfile', function () {
     return view('linkRelProfile');
 });
 
-$app->get('noResponse', function () {
+$app->router->get('noResponse', function () {
     die();
 });
 
-$app->get('redirect', function () {
+$app->router->get('redirect', function () {
     return redirect('/noMixedContent');
 });
 
-$app->get('booted', function () {
+$app->router->get('booted', function () {
     return 'app has booted';
 });
 
