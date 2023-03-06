@@ -38,7 +38,6 @@ class MixedContentScanner
         ($this->configureCrawler)($crawler);
 
         if ($this->maximumCrawlCount) {
-            //$crawler->setMaximumCrawlCount($this->maximumCrawlCount);
             $crawler->setTotalCrawlLimit($this->maximumCrawlCount);
         }
 
