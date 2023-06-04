@@ -9,7 +9,12 @@ use Spatie\Crawler\CrawlObservers\CrawlObserver;
 
 class MixedContentObserver extends CrawlObserver
 {
-    public function crawled(UriInterface $url, ResponseInterface $response, ?UriInterface $foundOnUrl = null): void
+    public function crawled(
+        UriInterface $url,
+        ResponseInterface $response, ?
+        UriInterface $foundOnUrl = null,
+        ?string $linkText = null,
+    ): void
     {
         $mixedContent = MixedContentExtractor::extract((string) $response->getBody(), $url);
 
@@ -27,7 +32,8 @@ class MixedContentObserver extends CrawlObserver
     public function crawlFailed(
         UriInterface $url,
         RequestException $requestException,
-        ?UriInterface $foundOnUrl = null
+        ?UriInterface $foundOnUrl = null,
+        ?string $linkText = null,
     ): void {
     }
 
