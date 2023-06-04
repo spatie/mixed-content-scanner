@@ -1,11 +1,7 @@
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/support-ukraine.svg?t=1" />](https://supportukrainenow.org)
-
 # Scan your site for mixed content
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/spatie/mixed-content-scanner.svg?style=flat-square)](https://packagist.org/packages/spatie/mixed-content-scanner)
 ![Tests](https://github.com/spatie/mixed-content-scanner/workflows/Tests/badge.svg)
-![Check & fix styling](https://github.com/spatie/mixed-content-scanner/workflows/Code%20style/badge.svg)
 [![Total Downloads](https://img.shields.io/packagist/dt/spatie/mixed-content-scanner.svg?style=flat-square)](https://packagist.org/packages/spatie/mixed-content-scanner)
 
 This package contains a class that can scan your site for [mixed content](https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content).
