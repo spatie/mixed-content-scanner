@@ -4,7 +4,7 @@ Because there are many breaking changes an upgrade is not that easy.
 There are many edge cases this guide does not cover. 
 We accept PRs to improve this guide.
 
-## From 3.0 to 4.0
+## From 4.0 to 5.0
 
 - `spatie/crawler` is updated to `^8.0`. In the `MixedContentObserver` provided by this package, a new parameter `linkText` was added to several methods. If you extend that observer, you should add that parameter to your methods as well.
 
