@@ -2,6 +2,10 @@
 
 All notable changes to `mixed-content-scanner` will be documented in this file
 
+## 5.0.0 - 2023-06-04
+
+- use crawler v8
+
 ## 4.0.4 - 2023-03-06
 
 ### What's Changed
