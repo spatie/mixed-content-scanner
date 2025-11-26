@@ -8,7 +8,7 @@ class Server
 {
     protected Client $client;
 
-    public function __construct(Client $client = null)
+    public function __construct(?Client $client = null)
     {
         static::boot();
 

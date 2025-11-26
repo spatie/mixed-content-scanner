@@ -1,35 +1,22 @@
 <?php
 
-namespace Spatie\MixedContentScanner\Test;
-
-use PHPUnit\Framework\TestCase;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 use Spatie\MixedContentScanner\MixedContentScanner;
+use Spatie\MixedContentScanner\Test\MixedContentLogger;
 
-class InvalidUrlTest extends TestCase
+it('will throw an exception when scanning an empty url', function () {
+    scan('');
+})->throws(InvalidUrl::class);
+
+it('will throw an exception when scanning an url with an invalid protocol', function () {
+    scan('htxp://spatie.be');
+})->throws(InvalidUrl::class);
+
+function scan(string $url): void
 {
-    /** @test */
-    public function it_will_throw_an_exception_when_scanning_an_empty_url()
-    {
-        $this->expectException(InvalidUrl::class);
+    $logger = new MixedContentLogger();
 
-        $this->scan('');
-    }
+    $scanner = new MixedContentScanner($logger);
 
-    /** @test */
-    public function it_will_throw_an_exception_when_scanning_an_url_with_an_invalid_protocol()
-    {
-        $this->expectException(InvalidUrl::class);
-
-        $this->scan('htxp://spatie.be');
-    }
-
-    protected function scan(string $url)
-    {
-        $logger = new MixedContentLogger();
-
-        $scanner = new MixedContentScanner($logger);
-
-        $scanner->scan($url);
-    }
+    $scanner->scan($url);
 }

@@ -51,6 +51,6 @@ class MixedContentLogger extends MixedContentObserver
     {
         $actualCount = count($this->log);
 
-        Assert::assertEquals($count, $actualCount, "Crawled {$count} urls instead of the expected {$actualCount}");
+        Assert::assertEquals($count, $actualCount, "Crawled {$actualCount} urls instead of the expected {$count}");
     }
 }

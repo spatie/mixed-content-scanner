@@ -1,86 +1,65 @@
 <?php
 
-namespace Spatie\MixedContentScanner\Test;
-
-use PHPUnit\Framework\TestCase;
 use Spatie\Crawler\Crawler;
 use Spatie\MixedContentScanner\Exceptions\InvalidUrl;
 use Spatie\MixedContentScanner\MixedContentScanner;
+use Spatie\MixedContentScanner\Test\MixedContentLogger;
+use Spatie\MixedContentScanner\Test\Server;
 
-class MixedContentScannerTest extends TestCase
-{
-    protected function setUp(): void
-    {
-        Server::boot();
-    }
+it('can find mixed content', function () {
+    $logger = new MixedContentLogger();
 
-    /** @test */
-    public function it_can_find_mixed_content()
-    {
+    $scanner = new MixedContentScanner($logger);
+
+    $scanner->scan('http://'.Server::getServerUrl());
+
+    $logger->assertPageHasMixedContent('/mixedContent');
+
+    $logger->assertPageHasNoMixedContent('/noMixedContent');
+});
+
+it('will only mark stylesheet rel as mixed content', function () {
+    $logger = new MixedContentLogger();
+
+    $scanner = new MixedContentScanner($logger);
+
+    $scanner->scan('http://'.Server::getServerUrl());
+
+    $logger->assertPageHasMixedContent('/linkRelStyleSheet');
+
+    $logger->assertPageHasNoMixedContent('/linkRelProfile');
+});
+
+it('will throw an exception when given an url with an invalid protocol', function () {
+    $logger = new MixedContentLogger();
+
+    $scanner = new MixedContentScanner($logger);
+
+    $scanner->scan('blabla');
+})->throws(InvalidUrl::class);
+
+it('can limit the amount of crawled urls', function () {
+    foreach (range(1, 3) as $crawlCount) {
         $logger = new MixedContentLogger();
 
-        $scanner = new MixedContentScanner($logger);
+        $scanner = (new MixedContentScanner($logger))->configureCrawler(function (Crawler $crawler) use ($crawlCount) {
+            $crawler->setTotalCrawlLimit($crawlCount);
+        });
 
         $scanner->scan('http://'.Server::getServerUrl());
 
-        $logger->assertPageHasMixedContent('/mixedContent');
-
-        $logger->assertPageHasNoMixedContent('/noMixedContent');
+        $logger->assertCrawlCount($crawlCount);
     }
+});
 
-    /** @test */
-    public function it_will_only_mark_stylesheet_rel_as_mixed_content()
-    {
-        $logger = new MixedContentLogger();
+it('can scan pages not ending in slash', function () {
+    $logger = new MixedContentLogger();
 
-        $scanner = new MixedContentScanner($logger);
+    $scanner = new MixedContentScanner($logger);
 
-        $scanner->scan('http://'.Server::getServerUrl());
+    $scanner->scan('http://'.Server::getRootServerUrl());
 
-        $logger->assertPageHasMixedContent('/linkRelStyleSheet');
+    $logger->assertPageHasMixedContent('/mixedContent');
 
-        $logger->assertPageHasNoMixedContent('/linkRelProfile');
-    }
-
-    /** @test */
-    public function it_will_throw_an_exception_when_given_an_url_with_an_invalid_protocol()
-    {
-        $logger = new MixedContentLogger();
-
-        $scanner = new MixedContentScanner($logger);
-
-        $this->expectException(InvalidUrl::class);
-
-        $scanner->scan('blabla');
-    }
-
-    /** @test */
-    public function it_can_limit_the_amout_of_crawled_urls()
-    {
-        foreach (range(1, 3) as $crawlCount) {
-            $logger = new MixedContentLogger();
-
-            $scanner = (new MixedContentScanner($logger))->configureCrawler(function (Crawler $crawler) use ($crawlCount) {
-                $crawler->setTotalCrawlLimit($crawlCount);
-            });
-
-            $scanner->scan('http://'.Server::getServerUrl());
-
-            $logger->assertCrawlCount($crawlCount);
-        }
-    }
-
-    /** @test */
-    public function it_can_scan_pages_not_ending_in_slash()
-    {
-        $logger = new MixedContentLogger();
-
-        $scanner = new MixedContentScanner($logger);
-
-        $scanner->scan('http://'.Server::getRootServerUrl());
-
-        $logger->assertPageHasMixedContent('/mixedContent');
-
-        $logger->assertPageHasNoMixedContent('/noMixedContent');
-    }
-}
+    $logger->assertPageHasNoMixedContent('/noMixedContent');
+});
