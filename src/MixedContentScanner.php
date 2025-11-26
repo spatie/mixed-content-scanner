@@ -23,8 +23,7 @@ class MixedContentScanner
     {
         $this->mixedContentObserver = $mixedContentObserver;
 
-        $this->configureCrawler = function (Crawler $crawler) {
-        };
+        $this->configureCrawler = function (Crawler $crawler) {};
     }
 
     public function scan(string $url, array $clientOptions = []): void

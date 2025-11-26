@@ -7,7 +7,7 @@ use Spatie\MixedContentScanner\Test\MixedContentLogger;
 use Spatie\MixedContentScanner\Test\Server;
 
 it('can find mixed content', function () {
-    $logger = new MixedContentLogger();
+    $logger = new MixedContentLogger;
 
     $scanner = new MixedContentScanner($logger);
 
@@ -19,7 +19,7 @@ it('can find mixed content', function () {
 });
 
 it('will only mark stylesheet rel as mixed content', function () {
-    $logger = new MixedContentLogger();
+    $logger = new MixedContentLogger;
 
     $scanner = new MixedContentScanner($logger);
 
@@ -31,7 +31,7 @@ it('will only mark stylesheet rel as mixed content', function () {
 });
 
 it('will throw an exception when given an url with an invalid protocol', function () {
-    $logger = new MixedContentLogger();
+    $logger = new MixedContentLogger;
 
     $scanner = new MixedContentScanner($logger);
 
@@ -40,7 +40,7 @@ it('will throw an exception when given an url with an invalid protocol', functio
 
 it('can limit the amount of crawled urls', function () {
     foreach (range(1, 3) as $crawlCount) {
-        $logger = new MixedContentLogger();
+        $logger = new MixedContentLogger;
 
         $scanner = (new MixedContentScanner($logger))->configureCrawler(function (Crawler $crawler) use ($crawlCount) {
             $crawler->setTotalCrawlLimit($crawlCount);
@@ -53,7 +53,7 @@ it('can limit the amount of crawled urls', function () {
 });
 
 it('can scan pages not ending in slash', function () {
-    $logger = new MixedContentLogger();
+    $logger = new MixedContentLogger;
 
     $scanner = new MixedContentScanner($logger);
 

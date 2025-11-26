@@ -11,11 +11,9 @@ class MixedContentObserver extends CrawlObserver
 {
     public function crawled(
         UriInterface $url,
-        ResponseInterface $response, ?
-        UriInterface $foundOnUrl = null,
+        ResponseInterface $response, ?UriInterface $foundOnUrl = null,
         ?string $linkText = null,
-    ): void
-    {
+    ): void {
         $mixedContent = MixedContentExtractor::extract((string) $response->getBody(), $url);
 
         if (! count($mixedContent)) {
@@ -34,24 +32,17 @@ class MixedContentObserver extends CrawlObserver
         RequestException $requestException,
         ?UriInterface $foundOnUrl = null,
         ?string $linkText = null,
-    ): void {
-    }
+    ): void {}
 
     /**
      * Will be called when mixed content was found.
-     *
-     * @param \Spatie\MixedContentScanner\MixedContent $mixedContent
      */
-    public function mixedContentFound(MixedContent $mixedContent)
-    {
-    }
+    public function mixedContentFound(MixedContent $mixedContent) {}
 
     /**
      * Will be called when no mixed content was found on the given url.
      *
      * @param \Psr\Http\Message\UriInterface
      */
-    public function noMixedContentFound(UriInterface $crawledUrl): void
-    {
-    }
+    public function noMixedContentFound(UriInterface $crawledUrl): void {}
 }

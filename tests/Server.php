@@ -12,7 +12,7 @@ class Server
     {
         static::boot();
 
-        $this->client = $client ?? new Client();
+        $this->client = $client ?? new Client;
     }
 
     public static function boot()

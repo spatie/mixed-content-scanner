@@ -14,7 +14,7 @@ it('will throw an exception when scanning an url with an invalid protocol', func
 
 function scan(string $url): void
 {
-    $logger = new MixedContentLogger();
+    $logger = new MixedContentLogger;
 
     $scanner = new MixedContentScanner($logger);
 

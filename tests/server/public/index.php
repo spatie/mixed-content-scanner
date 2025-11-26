@@ -27,7 +27,7 @@ $app->router->get('/linkRelProfile', function () {
 });
 
 $app->router->get('noResponse', function () {
-    die();
+    exit();
 });
 
 $app->router->get('redirect', function () {
